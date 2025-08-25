@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odstranění Demo Postu - Ráj mazlíčků</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover { background: #c82333; }
+        button:disabled { 
+            background: #6c757d; 
+            cursor: not-allowed; 
+        }
+        .safe-button {
+            background: #28a745;
+        }
+        .safe-button:hover { background: #218838; }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .status {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗑️ Odstranění Demo Postu</h1>
+        <p>Tento nástroj vám umožní definitivně odstranit demo post "Vítejte v našem novém blogu!" a vypnout jeho automatické přidávání.</p>
+        
+        <div class="warning">
+            <strong>⚠️ Upozornění:</strong> Tato akce je nevratná! Demo post bude trvale odstraněn a už se nebude automaticky přidávat.
+        </div>
+        
+        <div id="status"></div>
+        
+        <div>
+            <button onclick="checkDemoPostStatus()" class="safe-button">Zkontrolovat stav demo postu</button>
+            <button onclick="removeDemoPost()" class="safe-button">Odstranit demo post</button>
+            <button onclick="permanentlyRemoveDemoPost()">🗑️ DEFINITIVNĚ ODSTRANIT</button>
+            <button onclick="clearLog()">Vymazat log</button>
+        </div>
+        
+        <div class="log" id="log"></div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="demo-post.js"></script>
+    
+    <script>
+        let logElement;
+        let statusElement;
+        
+        function log(message, type = 'info') {
+            if (!logElement) logElement = document.getElementById('log');
+            
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span style="color: #666;">[${timestamp}]</span> ${message}`;
+            
+            if (type === 'error') logEntry.style.color = '#dc3545';
+            else if (type === 'success') logEntry.style.color = '#28a745';
+            else if (type === 'warning') logEntry.style.color = '#ffc107';
+            
+            logElement.appendChild(logEntry);
+            logElement.scrollTop = logElement.scrollHeight;
+            
+            console.log(`[${timestamp}] ${message}`);
+        }
+        
+        function updateStatus(message, type = 'info') {
+            if (!statusElement) statusElement = document.getElementById('status');
+            statusElement.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+        
+        function clearLog() {
+            if (logElement) logElement.innerHTML = '';
+        }
+        
+        async function checkDemoPostStatus() {
+            log('🔍 Kontroluji stav demo postu...', 'info');
+            updateStatus('Kontroluji stav demo postu...', 'info');
+            
+            try {
+                if (!firebase || !firebase.firestore) {
+                    throw new Error('Firebase není dostupný');
+                }
+                
+                const db = firebase.firestore();
+                
+                // Kontrola demo postu
+                const demoDoc = await db.collection('posts').doc('demo-post-1').get();
+                
+                // Kontrola statusu
+                const statusDoc = await db.collection('system').doc('demo-post-status').get();
+                
+                if (demoDoc.exists) {
+                    const data = demoDoc.data();
+                    log(`📄 Demo post existuje:`, 'warning');
+                    log(`   ID: ${demoDoc.id}`, 'info');
+                    log(`   Název: ${data.title}`, 'info');
+                    log(`   Vytvořen: ${data.timestamp}`, 'info');
+                } else {
+                    log('✅ Demo post neexistuje', 'success');
+                }
+                
+                if (statusDoc.exists) {
+                    const statusData = statusDoc.data();
+                    if (statusData.disabled) {
+                        log(`🔒 Demo post je trvale vypnutý od: ${statusData.disabledAt.toDate().toLocaleString('cs-CZ')}`, 'success');
+                        log(`   Důvod: ${statusData.reason}`, 'info');
+                    } else {
+                        log('⚠️ Demo post není vypnutý', 'warning');
+                    }
+                } else {
+                    log('ℹ️ Demo post status neexistuje', 'info');
+                }
+                
+                updateStatus('Kontrola dokončena', 'info');
+                
+            } catch (error) {
+                log(`❌ Chyba při kontrole: ${error.message}`, 'error');
+                updateStatus(`❌ Chyba: ${error.message}`, 'error');
+            }
+        }
+        
+        async function removeDemoPost() {
+            log('🗑️ Odstraňuji demo post...', 'warning');
+            updateStatus('Odstraňuji demo post...', 'warning');
+            
+            try {
+                if (!firebase || !firebase.firestore) {
+                    throw new Error('Firebase není dostupný');
+                }
+                
+                const db = firebase.firestore();
+                
+                // Odstranění demo postu
+                await db.collection('posts').doc('demo-post-1').delete();
+                
+                log('✅ Demo post byl odstraněn!', 'success');
+                updateStatus('✅ Demo post byl odstraněn!', 'success');
+                
+                // Kontrola, zda byl skutečně odstraněn
+                const demoDoc = await db.collection('posts').doc('demo-post-1').get();
+                if (!demoDoc.exists) {
+                    log('✅ Ověření: Demo post skutečně neexistuje', 'success');
+                } else {
+                    log('⚠️ Ověření: Demo post stále existuje', 'warning');
+                }
+                
+            } catch (error) {
+                log(`❌ Chyba při odstraňování: ${error.message}`, 'error');
+                updateStatus(`❌ Chyba: ${error.message}`, 'error');
+            }
+        }
+        
+        async function permanentlyRemoveDemoPost() {
+            log('🚨 DEFINITIVNĚ ODSTRANŮJI DEMO POST...', 'error');
+            updateStatus('🚨 DEFINITIVNĚ ODSTRANŮJI DEMO POST...', 'error');
+            
+            try {
+                if (!firebase || !firebase.firestore) {
+                    throw new Error('Firebase není dostupný');
+                }
+                
+                const db = firebase.firestore();
+                
+                // Odstranění demo postu
+                await db.collection('posts').doc('demo-post-1').delete();
+                log('✅ Demo post byl odstraněn', 'success');
+                
+                // Přidání flagu, že demo post je trvale vypnutý
+                await db.collection('system').doc('demo-post-status').set({
+                    disabled: true,
+                    disabledAt: new Date(),
+                    reason: 'Manuálně vypnuto uživatelem přes nástroj',
+                    disabledBy: 'remove-demo-post.html'
+                });
+                
+                log('🔒 Demo post je nyní trvale vypnutý', 'success');
+                log('✅ Status uložen v kolekci system', 'success');
+                
+                updateStatus('✅ Demo post byl definitivně odstraněn a vypnut!', 'success');
+                
+                // Kontrola
+                const statusDoc = await db.collection('system').doc('demo-post-status').get();
+                if (statusDoc.exists && statusDoc.data().disabled) {
+                    log('✅ Ověření: Demo post je trvale vypnutý', 'success');
+                }
+                
+            } catch (error) {
+                log(`❌ Chyba při definitivním odstranění: ${error.message}`, 'error');
+                updateStatus(`❌ Chyba: ${error.message}`, 'error');
+            }
+        }
+        
+        // Automatická kontrola při načtení
+        window.addEventListener('load', () => {
+            log('🚀 Nástroj pro odstranění demo postu načten', 'info');
+            log('📋 Použijte tlačítka pro kontrolu a odstranění demo postu', 'info');
+        });
+    </script>
+</body>
+</html>

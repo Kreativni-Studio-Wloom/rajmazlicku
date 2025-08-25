@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trhy Ráje mazlíčků Cheb - Ráj mazlíčků</title>
+    <meta name="description" content="Trhy Ráje mazlíčků Cheb - akvaristicko-teraristické trhy v Chebu. Informace o termínech, vstupném a prodejcích.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #00a79e;
+            --secondary-color: #46707f;
+            --accent-color: #ff6b35;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --border-radius: 12px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            height: 60px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://rajmazlicku.eu/wp-content/uploads/2023/10/AkvaTera-Cheb-FEK-ZCU-aula-9.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--white);
+            padding: 200px 0 120px;
+            min-height: 80vh;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: slideInUp 1s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.2s both;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Sections */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        /* Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .info-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 2rem;
+            transition: var(--transition);
+        }
+
+        .info-card:hover .info-icon {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .info-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* Termíny */
+        .dates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .date-card {
+            background: var(--light-gray);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            border-left: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .date-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .date-month {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .date-day {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Ceník */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .price-currency {
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .price-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .buy-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .buy-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .gallery-item {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Contact */
+        .contact-info {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+
+        /* Countdown Section */
+        .countdown-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .countdown-number {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s infinite;
+        }
+
+        .countdown-label {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .next-event-info {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            display: inline-block;
+            box-shadow: var(--shadow);
+        }
+
+        .next-event-date {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .next-event-time {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Event Image Section */
+        .event-image-section {
+            position: relative;
+            margin-bottom: 4rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .event-image-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .event-image-section:hover .event-image {
+            transform: scale(1.05);
+        }
+
+        .event-image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .event-image-overlay h3 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+        }
+
+        .event-image-overlay p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                background-attachment: scroll;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center top;
+                min-height: 60vh;
+                padding: 150px 0 80px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dates-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="../index.html">
+                    <img src="../photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../index.html#branches">Pobočky</a></li>
+                    <li><a href="../index.html#akvatera">Trhy</a></li>
+                    <li><a href="../index.html#smecka">Smečka</a></li>
+                    <li><a href="../index.html#gallery">Fotogalerie</a></li>
+                    <li><a href="../index.html#aktuality">Aktuality</a></li>
+                    <li><a href="../index.html#faq">FAQ</a></li>
+                    <li><a href="../index.html#contact">Kontakt</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container" style="position: relative; z-index: 2;">
+            <h1 data-aos="fade-up">Trhy Ráje mazlíčků Cheb</h1>
+            <p data-aos="fade-up" data-aos-delay="200" style="font-size: 1.3rem; line-height: 1.8; max-width: 800px; margin: 0 auto 2rem;">
+                Vydejte se nahlédnout do Života ve vodě – největších akvaristicko-teraristických trhů na západě Čech. Ponoříte se u nás (nejen) pod vodní hladinu a zažijete skvělé sobotní dopoledne plné poznání. Trhy nově připlouvají do sálu ZČU v Chebu, a přináší tak kus divočiny a přírody do středu města.
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="section">
+        <div class="container">
+
+            
+
+            
+            <!-- Odpočet do dalšího konání -->
+            <div class="countdown-section" data-aos="fade-up">
+                <h2 class="section-title">Další konání již za</h2>
+                <div class="countdown-container">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="days">00</div>
+                        <div class="countdown-label">dnů</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="hours">00</div>
+                        <div class="countdown-label">hodin</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="minutes">00</div>
+                        <div class="countdown-label">minut</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="seconds">00</div>
+                        <div class="countdown-label">sekund</div>
+                    </div>
+                </div>
+                <div class="next-event-info">
+                    <div class="next-event-date" id="nextEventDate">11. října 2025</div>
+                    <div class="next-event-time">9:00</div>
+                </div>
+            </div>
+            
+
+            
+                        <!-- Termíny 2025 -->
+            <h2 class="section-title" data-aos="fade-up">Termíny 2025</h2>
+            <div class="dates-grid">
+                <div class="date-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="date-month">Října</div>
+                    <div class="date-day">11.</div>
+                </div>
+                <div class="date-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="date-month">Listopadu</div>
+                    <div class="date-day">15.</div>
+                </div>
+            </div>
+
+            <!-- Informace -->
+            <div class="info-grid">
+                <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="info-icon">🕘</div>
+                    <h3 class="info-title">Čas konání</h3>
+                    <p><strong>Sobota 9:00 - 12:00</strong></p>
+                    <p>Každý měsíc v sobotu dopoledne</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-icon">📍</div>
+                    <h3 class="info-title">Místo konání</h3>
+                    <p><strong>sál FEK ZČU, Hradební 2047/22, Cheb</strong></p>
+                    <p>Společenský sál univerzity s bezbariérovým vstupem</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="info-icon">🚗</div>
+                    <h3 class="info-title">Parkování</h3>
+                    <p>Zdarma v okolí školy (do 5 min. chůze)</p>
+                    <p>Možnost využít chebskou MHD</p>
+                </div>
+            </div>
+
+            <!-- Ceník -->
+            <h2 class="section-title" data-aos="fade-up">Ceník vstupného</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="price">70 <span class="price-currency">Kč</span></div>
+                    <div class="price-description">Dospělá vstupenka</div>
+                    <a href="https://zivotvevode.sumupstore.com/kategorie/vstupenky" class="buy-button" target="_blank">Koupit on-line</a>
+                </div>
+
+                <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="price">10 <span class="price-currency">Kč</span></div>
+                    <div class="price-description">Dětská vstupenka do 15 let</div>
+                    <a href="https://zivotvevode.sumupstore.com/kategorie/vstupenky" class="buy-button" target="_blank">Koupit on-line</a>
+                </div>
+            </div>
+
+            <!-- Informace o místě -->
+            <h2 class="section-title" data-aos="fade-up">Kde se akce koná?</h2>
+            <div class="info-grid">
+                <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="info-icon">🏢</div>
+                    <h3 class="info-title">Společenský sál ZČU Cheb</h3>
+                    <p>Návštěvníci vchází do budovy vedlejším vchodem přímo k sálu (nikoliv přes vstup do školy). Vstup je kompletně bezbariérový. Poznávacím bodem je socha, od které jsou dveře vpravo.</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-icon">🚗</div>
+                    <h3 class="info-title">Parkovací možnosti</h3>
+                    <p>Parkovat můžete zdarma přímo v okolí školy (vyznačeno červeně, vše dochozí vzdálenost do 5 min.), případně využít chebskou MHD.</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="info-icon">🏛️</div>
+                    <h3 class="info-title">Vybavení sálu</h3>
+                    <p>Vzdušný společenský sál univerzity disponuje dostatečným místem pro širokou nabídku našich prodejců a výstavců. Na místě jsou dostupné toalety a občerstvení po celou dobu konání akce.</p>
+                </div>
+            </div>
+
+            <!-- Co uvidíte -->
+            <h2 class="section-title" data-aos="fade-up">Na co se můžete těšit?</h2>
+            <div class="info-grid">
+                <div class="info-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="info-icon">🐟</div>
+                    <h3 class="info-title">Vodní živočichové</h3>
+                    <p>Akvarijní ryby, krevety, šneky a další vodní živočichy</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="info-icon">🐍</div>
+                    <h3 class="info-title">Terarijní živočichové</h3>
+                    <p>Hady, agamy, chameleony, želvy a další terarijní živočichy</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="info-icon">🌿</div>
+                    <h3 class="info-title">Rostliny</h3>
+                    <p>Vodní i suchozemské rostliny (sezónně i venkovní)</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="info-icon">🦜</div>
+                    <h3 class="info-title">Ptactvo</h3>
+                    <p>Andulky, zebřičky, korely a další ptactvo</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="info-icon">🐇</div>
+                    <h3 class="info-title">Hlodavci</h3>
+                    <p>Křečky, morčata, králíky a další hlodavce</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="info-icon">🥩</div>
+                    <h3 class="info-title">Krmiva</h3>
+                    <p>Širokou škálu krmiv, vč. živého a mraženého hmyzu</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="700">
+                    <div class="info-icon">🧸</div>
+                    <h3 class="info-title">Příslušenství</h3>
+                    <p>Veškeré příslušenství (klece, vybavení, dekorace,..)</p>
+                </div>
+
+                <div class="info-card" data-aos="fade-up" data-aos-delay="800">
+                    <div class="info-icon">🐶</div>
+                    <h3 class="info-title">Pro psy a kočky</h3>
+                    <p>Krmiva, hračky a pamlsky pro psy a kočky</p>
+                </div>
+            </div>
+
+            <!-- Kontakt -->
+            <h2 class="section-title" data-aos="fade-up">Kontaktujte nás</h2>
+            <div class="contact-info" data-aos="fade-up">
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <span>+420 359 901 449</span>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <span>info@zivotvevode.cz</span>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <span>Informace rádi poskytneme také na pobočkách Ráj mazlíčků</span>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div style="text-align: center; margin-top: 3rem;" data-aos="fade-up">
+                <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Vstupenky v předprodeji</h3>
+                <p style="margin-bottom: 2rem;">Zakupte si vstupenky v předprodeji – vyhněte se frontě u vstupu</p>
+                <a href="https://zivotvevode.sumupstore.com/kategorie/vstupenky" class="buy-button" target="_blank">Vstupenky on-line</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Ráj mazlíčků s.r.o.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-light);">made by <strong><a href="https://wloom.eu" target="_blank" style="color: var(--primary-color); text-decoration: none;">Wloom</a></strong></p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Countdown Timer
+        function updateCountdown() {
+            const now = new Date().getTime();
+            
+            // Automaticky načíst termíny z HTML stránky
+            const dateCards = document.querySelectorAll('.date-card');
+            const eventDates = [];
+            
+            // Procházet všechny termíny na stránce a vytvořit datumy
+            dateCards.forEach(card => {
+                const monthElement = card.querySelector('.date-month');
+                const dayElement = card.querySelector('.date-day');
+                
+                if (monthElement && dayElement) {
+                    const month = monthElement.textContent.trim();
+                    const day = dayElement.textContent.replace('.', '').trim();
+                    
+                    // Mapování českých měsíců na čísla
+                    const monthMap = {
+                        'Ledna': 0, 'Února': 1, 'Března': 2, 'Dubna': 3, 'Května': 4, 'Června': 5,
+                        'Července': 6, 'Srpen': 7, 'Srpna': 7, 'Září': 8, 'Října': 9, 'Listopadu': 10, 'Prosince': 11
+                    };
+                    
+                    const monthNumber = monthMap[month];
+                    if (monthNumber !== undefined && day) {
+                        // Vytvořit datum pro aktuální rok
+                        const currentYear = new Date().getFullYear();
+                        const eventDate = new Date(currentYear, monthNumber, parseInt(day), 9, 0, 0);
+                        
+                        // Pokud datum už proběhlo v tomto roce, zkusit příští rok
+                        if (eventDate <= now) {
+                            eventDate.setFullYear(currentYear + 1);
+                        }
+                        
+                        eventDates.push(eventDate);
+                    }
+                }
+            });
+            
+            // Seřadit termíny podle data
+            eventDates.sort((a, b) => a - b);
+            
+            // Najít další termín
+            let nextEvent = null;
+            for (let date of eventDates) {
+                if (date > now) {
+                    nextEvent = date;
+                    break;
+                }
+            }
+            
+            // Pokud není žádný budoucí termín, použít první termín příštího roku
+            if (!nextEvent && eventDates.length > 0) {
+                const firstEvent = eventDates[0];
+                firstEvent.setFullYear(firstEvent.getFullYear() + 1);
+                nextEvent = firstEvent;
+            }
+            
+            // Aktualizovat datum v UI
+            const dateElement = document.getElementById('nextEventDate');
+            if (dateElement && nextEvent) {
+                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                dateElement.textContent = nextEvent.toLocaleDateString('cs-CZ', options);
+            }
+            
+            // Výpočet rozdílu
+            if (nextEvent) {
+                const distance = nextEvent - now;
+                
+                if (distance > 0) {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    // Aktualizovat UI
+                    document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                }
+            }
+        }
+        
+        // Spustit odpočet každou sekundu
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

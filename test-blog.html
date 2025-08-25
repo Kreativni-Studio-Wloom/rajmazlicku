@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Blog Systému - Ráj mazlíčků</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #00a79e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #008f87;
+        }
+        .test-result {
+            background: #f0f0f0;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Test Blog Systému - Ráj mazlíčků</h1>
+    
+            <div class="test-section">
+            <h2>1. Test Firebase a Lokálního Úložiště</h2>
+            <button class="test-button" onclick="testLocalStorage()">Testovat localStorage</button>
+            <button class="test-button" onclick="clearLocalStorage()">Vyčistit localStorage</button>
+            <button class="test-button" onclick="clearFirebase()">Testovat Firebase</button>
+            <div id="localStorageResult" class="test-result"></div>
+        </div>
+
+    <div class="test-section">
+        <h2>2. Test Ukázkového Článku</h2>
+        <button class="test-button" onclick="addDemoPost()">Přidat ukázkový článek</button>
+        <button class="test-button" onclick="removeDemoPost()">Odstranit ukázkový článek</button>
+        <div id="demoPostResult" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. Test Načítání Článků</h2>
+        <button class="test-button" onclick="loadPosts()">Načíst všechny články</button>
+        <div id="loadPostsResult" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>4. Navigace</h2>
+        <a href="index.html" class="test-button" style="text-decoration: none; display: inline-block;">Hlavní stránka</a>
+        <a href="dashboard.html" class="test-button" style="text-decoration: none; display: inline-block;">Dashboard</a>
+        <a href="blog.html?id=demo-post-1" class="test-button" style="text-decoration: none; display: inline-block;">Ukázkový článek</a>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="demo-post.js"></script>
+    <script>
+        function testLocalStorage() {
+            const result = document.getElementById('localStorageResult');
+            try {
+                if (typeof(Storage) !== "undefined") {
+                    result.innerHTML = '<span class="success">✓ localStorage je podporován</span>';
+                } else {
+                    result.innerHTML = '<span class="error">✗ localStorage není podporován</span>';
+                }
+            } catch (e) {
+                result.innerHTML = '<span class="error">✗ Chyba: ' + e.message + '</span>';
+            }
+        }
+
+        function clearLocalStorage() {
+            const result = document.getElementById('localStorageResult');
+            try {
+                localStorage.removeItem('blogPosts');
+                result.innerHTML = '<span class="success">✓ localStorage vyčištěn</span>';
+            } catch (e) {
+                result.innerHTML = '<span class="error">✗ Chyba: ' + e.message + '</span>';
+            }
+        }
+
+        function clearFirebase() {
+            const result = document.getElementById('localStorageResult');
+            if (typeof firebase !== 'undefined' && firebase.firestore) {
+                result.innerHTML = '<span class="success">✓ Firebase je dostupný</span>';
+            } else {
+                result.innerHTML = '<span class="error">✗ Firebase není dostupný</span>';
+            }
+        }
+
+        function addDemoPost() {
+            const result = document.getElementById('demoPostResult');
+            try {
+                addDemoPost();
+                result.innerHTML = '<span class="success">✓ Ukázkový článek přidán</span>';
+            } catch (e) {
+                result.innerHTML = '<span class="error">✗ Chyba: ' + e.message + '</span>';
+            }
+        }
+
+        function removeDemoPost() {
+            const result = document.getElementById('demoPostResult');
+            try {
+                removeDemoPost();
+                result.innerHTML = '<span class="success">✓ Ukázkový článek odstraněn</span>';
+            } catch (e) {
+                result.innerHTML = '<span class="error">✗ Chyba: ' + e.message + '</span>';
+            }
+        }
+
+        async function loadPosts() {
+            const result = document.getElementById('loadPostsResult');
+            try {
+                if (typeof firebase !== 'undefined' && firebase.firestore) {
+                    const db = firebase.firestore();
+                    const snapshot = await db.collection('posts').get();
+                    
+                    if (snapshot.empty) {
+                        result.innerHTML = '<span class="error">✗ Žádné články nenalezeny v Firebase</span>';
+                    } else {
+                        result.innerHTML = '<span class="success">✓ Načteno ' + snapshot.size + ' článků z Firebase</span><br>' +
+                            snapshot.docs.map(doc => {
+                                const post = doc.data();
+                                return `- ${post.title} (${post.category})`;
+                            }).join('<br>');
+                    }
+                } else {
+                    result.innerHTML = '<span class="error">✗ Firebase není dostupný</span>';
+                }
+            } catch (e) {
+                result.innerHTML = '<span class="error">✗ Chyba: ' + e.message + '</span>';
+            }
+        }
+
+        // Automatické testy při načtení
+        window.addEventListener('DOMContentLoaded', () => {
+            testLocalStorage();
+            clearFirebase();
+            loadPosts();
+        });
+    </script>
+</body>
+</html>

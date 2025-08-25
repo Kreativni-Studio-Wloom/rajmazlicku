@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Všechny aktuality - Ráj mazlíčků</title>
+    <meta name="description" content="Kompletní seznam všech aktualit a článků z Ráje mazlíčků s možností vyhledávání a filtrování.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #00a79e;
+            --secondary-color: #46707f;
+            --accent-color: #ff6b35;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --border-radius: 12px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            height: 60px;
+            transition: var(--transition);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Search and Filters */
+        .search-filters {
+            background: var(--white);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .search-container {
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            gap: 1rem;
+            align-items: end;
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 167, 158, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .filter-select {
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            background: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            color: var(--text-dark);
+            min-width: 180px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
+            padding-right: 3rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-select:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0, 167, 158, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 167, 158, 0.1), 0 4px 12px rgba(0, 167, 158, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .sort-select {
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            background: var(--white);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            color: var(--text-dark);
+            min-width: 160px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.5em;
+            padding-right: 3rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .sort-select:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0, 167, 158, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 167, 158, 0.1), 0 4px 12px rgba(0, 167, 158, 0.15);
+            transform: translateY(-1px);
+        }
+
+        /* Results Info */
+        .results-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .results-count {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .clear-filters {
+            background: none;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .clear-filters:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        /* Aktuality Grid */
+        .aktuality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .aktuality-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .aktuality-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .aktuality-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .aktuality-card:hover .aktuality-image {
+            transform: scale(1.05);
+        }
+
+        .aktuality-content {
+            padding: 1.5rem;
+        }
+
+        .aktuality-title {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            line-height: 1.3;
+        }
+
+        .aktuality-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            flex-wrap: wrap;
+        }
+
+        .aktuality-category {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .aktuality-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .aktuality-tag {
+            background: var(--light-gray);
+            color: var(--text-dark);
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .aktuality-excerpt {
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .aktuality-read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .aktuality-read-more:hover {
+            gap: 1rem;
+            color: var(--secondary-color);
+        }
+
+        /* Loading and No Results */
+        .loading-aktuality, .no-aktuality {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-light);
+            grid-column: 1 / -1;
+        }
+
+        .loading-aktuality .spinner {
+            border: 4px solid var(--light-gray);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 3rem 0;
+        }
+
+        .page-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--light-gray);
+            background: var(--white);
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .page-btn:hover, .page-btn.active {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--white);
+            color: var(--text-dark);
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .aktuality-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html">
+                    <img src="photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
+                </a>
+                <ul class="nav-links">
+                    <li><a href="index.html#branches">Pobočky</a></li>
+                    <li><a href="index.html#akvatera">Trhy</a></li>
+                    <li><a href="index.html#smecka">Smečka</a></li>
+                    <li><a href="index.html#gallery">Fotogalerie</a></li>
+                    <li><a href="index.html#aktuality">Aktuality</a></li>
+                    <li><a href="index.html#faq">FAQ</a></li>
+                    <li><a href="index.html#contact">Kontakt</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <h1 data-aos="fade-up">Všechny aktuality</h1>
+            <p data-aos="fade-up" data-aos-delay="200">Kompletní seznam všech článků a aktualit z Ráje mazlíčků</p>
+        </div>
+    </section>
+
+    <!-- Search and Filters -->
+    <section class="search-filters">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Vyhledat v aktualitách...">
+                </div>
+                <select id="categoryFilter" class="filter-select">
+                    <option value="">Všechny kategorie</option>
+                </select>
+                <select id="tagFilter" class="filter-select">
+                    <option value="">Všechna klíčová slova</option>
+                </select>
+                <select id="sortSelect" class="sort-select">
+                    <option value="date-desc">Nejnovější</option>
+                    <option value="date-asc">Nejstarší</option>
+                    <option value="title-asc">Název A-Z</option>
+                    <option value="title-desc">Název Z-A</option>
+                </select>
+            </div>
+            
+            <div class="results-info">
+                <div class="results-count" id="resultsCount">Načítám...</div>
+                <button class="clear-filters" id="clearFilters" style="display: none;">Vymazat filtry</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Aktuality Section -->
+    <section class="section">
+        <div class="container">
+            <div class="aktuality-grid" id="aktualityGrid">
+                <div class="loading-aktuality">
+                    <div class="spinner"></div>
+                    <p>Načítám aktuality...</p>
+                </div>
+            </div>
+            
+            <div class="pagination" id="pagination" style="display: none;"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Ráj mazlíčků s.r.o.</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-light);">made by <strong><a href="https://wloom.eu" target="_blank" style="color: var(--primary-color); text-decoration: none;">Wloom</a></strong></p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Global variables
+        let allPosts = [];
+        let filteredPosts = [];
+        let currentPage = 1;
+        const postsPerPage = 9;
+        let categories = new Set();
+        let tags = new Set();
+
+        // DOM elements
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const tagFilter = document.getElementById('tagFilter');
+        const sortSelect = document.getElementById('sortSelect');
+        const clearFiltersBtn = document.getElementById('clearFilters');
+        const resultsCount = document.getElementById('resultsCount');
+        const aktualityGrid = document.getElementById('aktualityGrid');
+        const pagination = document.getElementById('pagination');
+
+        // Event listeners
+        searchInput.addEventListener('input', debounce(applyFilters, 300));
+        categoryFilter.addEventListener('change', applyFilters);
+        tagFilter.addEventListener('change', applyFilters);
+        sortSelect.addEventListener('change', applyFilters);
+        clearFiltersBtn.addEventListener('click', clearAllFilters);
+
+        // Debounce function
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Remove diacritics function
+        function removeDiacritics(str) {
+            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
+        // Load all aktuality from Firestore
+        async function loadAllAktuality() {
+            try {
+                if (typeof firebase === 'undefined') {
+                    throw new Error('Firebase není dostupný');
+                }
+                
+                const db = firebase.firestore();
+                const snapshot = await db.collection('posts').get();
+                
+                if (snapshot.empty) {
+                    showNoResults();
+                    return;
+                }
+
+                allPosts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                    .filter(post => post && post.title && post.content);
+
+                // Extract categories and tags
+                allPosts.forEach(post => {
+                    if (post.category) categories.add(post.category);
+                    if (post.tags && Array.isArray(post.tags)) {
+                        post.tags.forEach(tag => tags.add(tag));
+                    }
+                });
+
+                // Populate filters
+                populateFilters();
+                
+                // Apply initial filters
+                applyFilters();
+                
+            } catch (error) {
+                console.error('Chyba při načítání aktualit:', error);
+                showError(error.message);
+            }
+        }
+
+        // Populate filter options
+        function populateFilters() {
+            // Categories
+            const categoryOptions = ['<option value="">Všechny kategorie</option>'];
+            Array.from(categories).sort().forEach(category => {
+                categoryOptions.push(`<option value="${category}">${category}</option>`);
+            });
+            categoryFilter.innerHTML = categoryOptions.join('');
+
+            // Tags
+            const tagOptions = ['<option value="">Všechna klíčová slova</option>'];
+            Array.from(tags).sort().forEach(tag => {
+                tagOptions.push(`<option value="${tag}">${tag}</option>`);
+            });
+            tagFilter.innerHTML = tagOptions.join('');
+        }
+
+        // Apply filters and search
+        function applyFilters() {
+            const searchTerm = removeDiacritics(searchInput.value.toLowerCase());
+            const selectedCategory = categoryFilter.value;
+            const selectedTag = tagFilter.value;
+            const sortBy = sortSelect.value;
+
+            // Filter posts
+            filteredPosts = allPosts.filter(post => {
+                const title = removeDiacritics(post.title.toLowerCase());
+                const content = removeDiacritics(post.content.toLowerCase());
+                const category = post.category || '';
+                const tags = post.tags || [];
+
+                // Search filter
+                const matchesSearch = !searchTerm || 
+                    title.includes(searchTerm) || 
+                    content.includes(searchTerm);
+
+                // Category filter
+                const matchesCategory = !selectedCategory || category === selectedCategory;
+
+                // Tag filter
+                const matchesTag = !selectedTag || tags.includes(selectedTag);
+
+                return matchesSearch && matchesCategory && matchesTag;
+            });
+
+            // Sort posts
+            sortPosts(sortBy);
+
+            // Update results count
+            updateResultsCount();
+
+            // Show/hide clear filters button
+            clearFiltersBtn.style.display = 
+                (searchTerm || selectedCategory || selectedTag) ? 'block' : 'none';
+
+            // Reset to first page
+            currentPage = 1;
+
+            // Display posts
+            displayPosts();
+        }
+
+        // Sort posts
+        function sortPosts(sortBy) {
+            switch (sortBy) {
+                case 'date-desc':
+                    filteredPosts.sort((a, b) => {
+                        const dateA = a.timestamp ? (a.timestamp.toDate ? a.timestamp.toDate() : new Date(a.timestamp)) : new Date(0);
+                        const dateB = b.timestamp ? (b.timestamp.toDate ? b.timestamp.toDate() : new Date(b.timestamp)) : new Date(0);
+                        return dateB - dateA;
+                    });
+                    break;
+                case 'date-asc':
+                    filteredPosts.sort((a, b) => {
+                        const dateA = a.timestamp ? (a.timestamp.toDate ? a.timestamp.toDate() : new Date(a.timestamp)) : new Date(0);
+                        const dateB = b.timestamp ? (b.timestamp.toDate ? b.timestamp.toDate() : new Date(b.timestamp)) : new Date(0);
+                        return dateA - dateB;
+                    });
+                    break;
+                case 'title-asc':
+                    filteredPosts.sort((a, b) => a.title.localeCompare(b.title, 'cs'));
+                    break;
+                case 'title-desc':
+                    filteredPosts.sort((a, b) => b.title.localeCompare(a.title, 'cs'));
+                    break;
+            }
+        }
+
+        // Display posts with pagination
+        function displayPosts() {
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const postsToShow = filteredPosts.slice(startIndex, endIndex);
+
+            if (postsToShow.length === 0) {
+                showNoResults();
+                return;
+            }
+
+            aktualityGrid.innerHTML = postsToShow.map(post => {
+                // Create excerpt
+                let excerpt = 'Bez obsahu';
+                if (post.content && typeof post.content === 'string') {
+                    const cleanContent = post.content.replace(/<[^>]*>/g, '').trim();
+                    excerpt = cleanContent.length > 150 
+                        ? cleanContent.substring(0, 150) + '...' 
+                        : cleanContent;
+                }
+
+                // Format date
+                let postDate = '';
+                if (post.timestamp) {
+                    try {
+                        if (post.timestamp.toDate) {
+                            postDate = post.timestamp.toDate().toLocaleDateString('cs-CZ', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                            });
+                        } else if (post.timestamp instanceof Date) {
+                            postDate = post.timestamp.toLocaleDateString('cs-CZ', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                            });
+                        } else {
+                            postDate = new Date(post.timestamp).toLocaleDateString('cs-CZ', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: 'numeric'
+                            });
+                        }
+                    } catch (dateError) {
+                        console.warn('Chyba při formátování data:', dateError);
+                        postDate = '';
+                    }
+                }
+
+                return `
+                    <div class="aktuality-card" onclick="openBlogPost('${post.id}')">
+                        <img src="${post.imageUrl && typeof post.imageUrl === 'string' && post.imageUrl.trim() ? post.imageUrl.trim() : 'https://via.placeholder.com/400x250/00a79e/ffffff?text=Bez+obrázku'}" 
+                             alt="${post.title && typeof post.title === 'string' ? post.title.trim() : 'Bez názvu'}" 
+                             class="aktuality-image"
+                             onerror="this.src='https://via.placeholder.com/400x250/00a79e/ffffff?text=Bez+obrázku';">
+                        <div class="aktuality-content">
+                            <h3 class="aktuality-title">${post.title && typeof post.title === 'string' ? post.title.trim() : 'Bez názvu'}</h3>
+                            
+                            <div class="aktuality-meta">
+                                <span class="aktuality-category">${post.category && typeof post.category === 'string' ? post.category.trim() : 'Bez kategorie'}</span>
+                                ${postDate ? `<span>${postDate}</span>` : ''}
+                            </div>
+                            
+                            ${post.tags && Array.isArray(post.tags) && post.tags.length > 0 ? `
+                                <div class="aktuality-tags">
+                                    ${post.tags
+                                        .filter(tag => tag && typeof tag === 'string' && tag.trim())
+                                        .slice(0, 3)
+                                        .map(tag => `<span class="aktuality-tag">${tag.trim()}</span>`)
+                                        .join('')}
+                                    ${post.tags.filter(tag => tag && typeof tag === 'string' && tag.trim()).length > 3 ? 
+                                        `<span class="aktuality-tag">+${post.tags.filter(tag => tag && typeof tag === 'string' && tag.trim()).length - 3}</span>` : ''}
+                                </div>
+                            ` : ''}
+                            
+                            <p class="aktuality-excerpt">${excerpt}</p>
+                            
+                            <a href="blog.html?id=${post.id}" class="aktuality-read-more" onclick="event.stopPropagation()">
+                                Číst dále
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Update pagination
+            updatePagination();
+        }
+
+        // Update pagination
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+            
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+
+            pagination.style.display = 'flex';
+            
+            let paginationHTML = '';
+            
+            // Previous button
+            if (currentPage > 1) {
+                paginationHTML += `<a href="#" class="page-btn" onclick="goToPage(${currentPage - 1})">← Předchozí</a>`;
+            }
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHTML += `<span class="page-btn active">${i}</span>`;
+                } else if (i === 1 || i === totalPages || (i >= currentPage - 2 && i <= currentPage + 2)) {
+                    paginationHTML += `<a href="#" class="page-btn" onclick="goToPage(${i})">${i}</a>`;
+                } else if (i === currentPage - 3 || i === currentPage + 3) {
+                    paginationHTML += `<span class="page-btn">...</span>`;
+                }
+            }
+            
+            // Next button
+            if (currentPage < totalPages) {
+                paginationHTML += `<a href="#" class="page-btn" onclick="goToPage(${currentPage + 1})">Další →</a>`;
+            }
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        // Go to specific page
+        function goToPage(page) {
+            currentPage = page;
+            displayPosts();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Update results count
+        function updateResultsCount() {
+            const total = filteredPosts.length;
+            const start = total === 0 ? 0 : (currentPage - 1) * postsPerPage + 1;
+            const end = Math.min(currentPage * postsPerPage, total);
+            
+            if (total === 0) {
+                resultsCount.textContent = 'Žádné výsledky';
+            } else if (total <= postsPerPage) {
+                resultsCount.textContent = `${total} aktualit`;
+            } else {
+                resultsCount.textContent = `${start}-${end} z ${total} aktualit`;
+            }
+        }
+
+        // Clear all filters
+        function clearAllFilters() {
+            searchInput.value = '';
+            categoryFilter.value = '';
+            tagFilter.value = '';
+            sortSelect.value = 'date-desc';
+            applyFilters();
+        }
+
+        // Show no results
+        function showNoResults() {
+            aktualityGrid.innerHTML = `
+                <div class="no-aktuality">
+                    <h3>Žádné výsledky</h3>
+                    <p>Zkuste změnit vyhledávací kritéria nebo filtry.</p>
+                </div>
+            `;
+            pagination.style.display = 'none';
+        }
+
+        // Show error
+        function showError(message) {
+            aktualityGrid.innerHTML = `
+                <div class="no-aktuality">
+                    <h3>Chyba při načítání</h3>
+                    <p>${message}</p>
+                    <button onclick="loadAllAktuality()" style="
+                        background: var(--primary-color);
+                        color: white;
+                        border: none;
+                        padding: 0.5rem 1rem;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        margin-top: 1rem;
+                    ">Zkusit znovu</button>
+                </div>
+            `;
+        }
+
+        // Open blog post
+        function openBlogPost(postId) {
+            window.open(`blog.html?id=${postId}`, '_blank');
+        }
+
+        // Load aktuality when page loads
+        document.addEventListener('DOMContentLoaded', loadAllAktuality);
+    </script>
+</body>
+</html>

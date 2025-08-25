@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Ráj mazlíčků</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .debug-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+    <h1>Debug stránka - Ráj mazlíčků</h1>
+    
+    <div class="debug-box">
+        <h2>Test externích knihoven</h2>
+        <div id="aos-status" class="status info">Kontroluji AOS knihovnu...</div>
+        <div id="fonts-status" class="status info">Kontroluji Google Fonts...</div>
+        <div id="images-status" class="status info">Kontroluji obrázky...</div>
+    </div>
+    
+    <div class="debug-box">
+        <h2>Test funkcí</h2>
+        <button onclick="testAOS()">Test AOS</button>
+        <button onclick="testScroll()">Test Scroll</button>
+        <button onclick="testImages()">Test Obrázky</button>
+    </div>
+    
+    <div class="debug-box">
+        <h2>Test navigace</h2>
+        <p><a href="index.html">Hlavní stránka</a></p>
+        <p><a href="stranka/akvaterachodov.html">AkvaTera Chodov</a></p>
+        <p><a href="stranka/akvateracheb.html">AkvaTera Cheb</a></p>
+    </div>
+    
+    <script>
+        console.log('Debug stránka se načítá...');
+        
+        // Test AOS knihovny
+        function testAOS() {
+            const status = document.getElementById('aos-status');
+            try {
+                if (typeof AOS !== 'undefined') {
+                    status.textContent = 'AOS knihovna je dostupná ✅';
+                    status.className = 'status success';
+                } else {
+                    status.textContent = 'AOS knihovna není dostupná ❌';
+                    status.className = 'status error';
+                }
+            } catch (error) {
+                status.textContent = 'Chyba při testování AOS: ' + error.message;
+                status.className = 'status error';
+            }
+        }
+        
+        // Test scroll funkce
+        function testScroll() {
+            const status = document.getElementById('aos-status');
+            status.textContent = 'Scroll funkce testována ✅';
+            status.className = 'status success';
+        }
+        
+        // Test obrázků
+        function testImages() {
+            const status = document.getElementById('images-status');
+            const img = new Image();
+            img.onload = function() {
+                status.textContent = 'Obrázky se načítají ✅';
+                status.className = 'status success';
+            };
+            img.onerror = function() {
+                status.textContent = 'Chyba při načítání obrázků ❌';
+                status.className = 'status error';
+            };
+            img.src = 'photo/rm-logo.png';
+        }
+        
+        // Automatické testy
+        window.addEventListener('load', () => {
+            console.log('Stránka se načetla');
+            
+            // Test AOS
+            setTimeout(() => {
+                testAOS();
+            }, 1000);
+            
+            // Test obrázků
+            setTimeout(() => {
+                testImages();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
