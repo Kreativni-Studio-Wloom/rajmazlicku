@@ -84,13 +84,6 @@ Options -Indexes
     # Přesměrovat / na index.html
     RewriteRule ^$ index.html [L]
     
-    # Přesměrovat URL bez .html na .html soubory
-    # Toto je hlavní pravidlo, které musí být první
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME}.html -f
-    RewriteRule ^(.+)$ $1.html [L]
-    
     # Specifická pravidla pro podstránky ve složce stranka/
     RewriteRule ^akvaterachodov/?$ stranka/akvaterachodov.html [L]
     RewriteRule ^akvateracheb/?$ stranka/akvateracheb.html [L]
@@ -113,15 +106,12 @@ Options -Indexes
     # Přesměrování starých .html URL na nové bez přípon (301 redirect)
     RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
     RewriteRule ^ /%1 [R=301,L]
-    
-    # Zpracování URL s parametry
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^([^?]+)(\?.*)?$ $1.html$2 [L,QSA]
-    
-    # Zpracování URL s trailing slash
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^(.+)/$ $1.html [L,R=301]
+</IfModule>
+
+# Fallback pravidla pro případ, že mod_rewrite není dostupný
+<IfModule !mod_rewrite.c>
+    # Přesměrovat na .html soubory pomocí ErrorDocument
+    ErrorDocument 404 /404.html
 </IfModule>
 
 # Nastavení MIME typů
