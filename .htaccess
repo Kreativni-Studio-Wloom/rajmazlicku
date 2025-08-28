@@ -1,0 +1,131 @@
+# Bezpečnostní nastavení pro Ráj mazlíčků
+# Ochrana citlivých souborů a konfigurací
+
+# Zakázat přístup k citlivým souborům
+<Files "config.js">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "*.php">
+    # Povolit pouze POST požadavky na send-email*.php
+    <Files "send-email*.php">
+        <LimitExcept POST>
+            Order allow,deny
+            Deny from all
+        </LimitExcept>
+    </Files>
+</Files>
+
+# Zakázat přístup k log souborům
+<Files "*.log">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Zakázat přístup k .htaccess a .htpasswd
+<Files ".ht*">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Zakázat přístup k vendor složce (pokud existuje)
+<Directory "vendor">
+    Order allow,deny
+    Deny from all
+</Directory>
+
+# Zakázat přístup k composer souborům
+<Files "composer.*">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Bezpečnostní hlavičky
+<IfModule mod_headers.c>
+    # Zakázat zobrazování verze PHP
+    Header unset X-Powered-By
+    
+    # Nastavit Content Security Policy
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"
+    
+    # Nastavit X-Frame-Options
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Nastavit X-Content-Type-Options
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Nastavit Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Zakázat directory browsing
+Options -Indexes
+
+# Zakázat přístup k souborům s určitými příponami
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|swp|tmp)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Povolit pouze potřebné HTTP metody
+<LimitExcept GET POST>
+    Order allow,deny
+    Deny from all
+</LimitExcept>
+
+# URL Rewriting - odstranění .html přípon
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Nastavit base URL (důležité pro mobilní zařízení)
+    RewriteBase /
+    
+    # Přesměrovat / na index.html
+    RewriteRule ^$ index.html [L]
+    
+    # Přesměrovat URL bez .html na .html soubory
+    # Toto je hlavní pravidlo, které musí být první
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME}.html -f
+    RewriteRule ^(.+)$ $1.html [L]
+    
+    # Specifická pravidla pro podstránky ve složce stranka/
+    RewriteRule ^akvaterachodov/?$ stranka/akvaterachodov.html [L]
+    RewriteRule ^akvateracheb/?$ stranka/akvateracheb.html [L]
+    
+    # Přesměrování starých .html URL na nové bez přípon (301 redirect)
+    RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
+    RewriteRule ^ /%1 [R=301,L]
+    
+    # Zpracování URL s parametry
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([^?]+)(\?.*)?$ $1.html$2 [L,QSA]
+    
+    # Zpracování URL s trailing slash
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.+)/$ $1.html [L,R=301]
+</IfModule>
+
+# Nastavení MIME typů
+<IfModule mod_mime.c>
+    AddType text/html .html
+    AddType text/css .css
+    AddType application/javascript .js
+    AddType image/png .png
+    AddType image/jpeg .jpg .jpeg
+    AddType image/gif .gif
+    AddType image/svg+xml .svg
+</IfModule>
+
+# Zpracování chyb
+ErrorDocument 404 /404.html
+ErrorDocument 500 /500.html
+
+# Fallback pravidla pro případ, že mod_rewrite není dostupný
+<IfModule !mod_rewrite.c>
+    # Přesměrovat na .html soubory pomocí ErrorDocument
+    ErrorDocument 404 /404.html
+</IfModule>

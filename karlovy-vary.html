@@ -264,6 +264,8 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: var(--transition);
+            line-height: 0;
+            font-size: 0;
         }
 
         .branch-image:hover {
@@ -275,6 +277,9 @@
             width: 100%;
             height: 400px;
             object-fit: cover;
+            display: block;
+            margin: 0;
+            padding: 0;
         }
 
         /* Features */
@@ -367,17 +372,17 @@
     <header class="header" id="header">
         <div class="container">
             <nav class="nav">
-                <a href="index.html">
+                <a href="/">
                     <img src="photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
                 </a>
                 <ul class="nav-links">
-                    <li><a href="index.html#branches">Pobočky</a></li>
-                    <li><a href="index.html#akvatera">Trhy</a></li>
-                    <li><a href="index.html#smecka">Smečka</a></li>
-                    <li><a href="index.html#gallery">Fotogalerie</a></li>
-                    <li><a href="index.html#aktuality">Aktuality</a></li>
-                    <li><a href="index.html#faq">FAQ</a></li>
-                    <li><a href="index.html#contact">Kontakt</a></li>
+                    <li><a href="/#branches">Pobočky</a></li>
+                    <li><a href="/#akvatera">Trhy</a></li>
+                    <li><a href="/#smecka">Smečka</a></li>
+                    <li><a href="/#gallery">Fotogalerie</a></li>
+                    <li><a href="/#aktuality">Aktuality</a></li>
+                    <li><a href="/#faq">FAQ</a></li>
+                    <li><a href="/#contact">Kontakt</a></li>
                 </ul>
             </nav>
         </div>
@@ -415,9 +420,7 @@
                     </div>
                 </div>
                 
-                <div class="branch-image" data-aos="fade-left">
-                    <img src="https://rajmazlicku.eu/wp-content/uploads/2025/03/raj-mazlicku-kv.jpg" alt="Pobočka Ráj mazlíčků Karlovy Vary">
-                </div>
+                <div class="branch-image" data-aos="fade-left"><img src="https://rajmazlicku.eu/wp-content/uploads/2025/03/raj-mazlicku-kv.jpg" alt="Pobočka Ráj mazlíčků Karlovy Vary"></div>
             </div>
         </div>
     </section>

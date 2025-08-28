@@ -112,16 +112,18 @@
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://rajmazlicku.eu/wp-content/uploads/2023/10/AkvaTera-Cheb-FEK-ZCU-aula-9.jpg');
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../photo/foto6.jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            background-attachment: scroll;
             color: var(--white);
-            padding: 200px 0 120px;
             min-height: 80vh;
             text-align: center;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .hero::before {
@@ -528,15 +530,24 @@
 
             .hero {
                 background-attachment: scroll;
-                background-size: contain;
+                background-size: cover;
                 background-repeat: no-repeat;
                 background-position: center top;
                 min-height: 60vh;
                 padding: 150px 0 80px;
             }
 
+            .event-description {
+                display: block !important;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
+            }
+
+            /* Skrýt popis akce na mobilu */
+            .hero p {
+                display: none;
             }
 
             .info-grid {
@@ -575,17 +586,17 @@
     <header class="header" id="header">
         <div class="container">
             <nav class="nav">
-                <a href="../index.html">
+                <a href="/">
                     <img src="../photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
                 </a>
                 <ul class="nav-links">
-                    <li><a href="../index.html#branches">Pobočky</a></li>
-                    <li><a href="../index.html#akvatera">Trhy</a></li>
-                    <li><a href="../index.html#smecka">Smečka</a></li>
-                    <li><a href="../index.html#gallery">Fotogalerie</a></li>
-                    <li><a href="../index.html#aktuality">Aktuality</a></li>
-                    <li><a href="../index.html#faq">FAQ</a></li>
-                    <li><a href="../index.html#contact">Kontakt</a></li>
+                    <li><a href="/#branches">Pobočky</a></li>
+                    <li><a href="/#akvatera">Trhy</a></li>
+                    <li><a href="/#smecka">Smečka</a></li>
+                    <li><a href="/#gallery">Fotogalerie</a></li>
+                    <li><a href="/#aktuality">Aktuality</a></li>
+                    <li><a href="/#faq">FAQ</a></li>
+                    <li><a href="/#contact">Kontakt</a></li>
                 </ul>
             </nav>
         </div>
@@ -605,8 +616,12 @@
     <section class="section">
         <div class="container">
 
-            
-
+            <!-- Popis akce -->
+            <div class="event-description" data-aos="fade-up" style="text-align: center; margin-bottom: 3rem; padding: 2rem; background: var(--light-gray); border-radius: var(--border-radius); box-shadow: var(--shadow); display: none;">
+                <p style="font-size: 1.2rem; line-height: 1.8; color: var(--text-dark); margin: 0;">
+                    Vydejte se nahlédnout do Života ve vodě – největších akvaristicko-teraristických trhů na západě Čech. Ponoříte se u nás (nejen) pod vodní hladinu a zažijete skvělé sobotní dopoledne plné poznání. Trhy nově připlouvají do sálu ZČU v Chebu, a přináší tak kus divočiny a přírody do středu města.
+                </p>
+            </div>
             
             <!-- Odpočet do dalšího konání -->
             <div class="countdown-section" data-aos="fade-up">

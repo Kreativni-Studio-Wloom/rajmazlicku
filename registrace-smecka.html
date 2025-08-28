@@ -107,6 +107,24 @@
             color: var(--white);
             padding: 120px 0 80px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
         }
 
         .hero h1 {
@@ -345,7 +363,7 @@
     <header class="header" id="header">
         <div class="container">
             <nav class="nav">
-                <a href="index.html">
+                <a href="/">
                     <img src="photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
                 </a>
                 <ul class="nav-links">
@@ -423,14 +441,14 @@
                     <div class="checkbox-group">
                         <input type="checkbox" id="terms" name="terms" required>
                         <label for="terms">
-                            Souhlasím se <a href="https://rajmazlicku.eu/vop" target="_blank">všeobecnými obchodními podmínkami</a> a podmínkami členství ve věrnostním programu Smečka Ráj mazlíčků
+                            Souhlasím se <a href="/vop" target="_blank">všeobecnými obchodními podmínkami</a> a <a href="/podminky-smecka" target="_blank">podmínkami členství ve věrnostním programu Smečka Ráj mazlíčků</a>
                         </label>
                     </div>
 
                     <div class="checkbox-group">
                         <input type="checkbox" id="gdpr" name="gdpr" required>
-                        <label for="terms">
-                            Souhlasím se <a href="https://rajmazlicku.eu/gdpr" target="_blank">zpracováním osobních údajů</a>
+                        <label for="gdpr">
+                            Souhlasím se <a href="/gdpr" target="_blank">zpracováním osobních údajů</a>
                         </label>
                     </div>
 
@@ -452,7 +470,6 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="config.js"></script>
     
     <script>
         // Initialize AOS
@@ -478,16 +495,7 @@
         const submitButton = document.getElementById('submitButton');
         const messageContainer = document.getElementById('messageContainer');
 
-        // Email configuration for branches
-        const branchEmails = config.branchEmails;
 
-        // Gmail SMTP configuration
-        const emailConfig = {
-            service: 'gmail',
-            template: 'smecka_registration',
-            user: config.gmail.email,
-            password: config.gmail.appPassword
-        };
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -530,39 +538,32 @@
 
         // Function to send email
         async function sendEmail(data) {
-            const selectedBranch = data.branch;
-            const branchEmail = branchEmails[selectedBranch];
-            
-            if (!branchEmail) {
-                throw new Error('Neznámá pobočka');
+            try {
+                // Odeslání dat na produkční PHP skript s PHPMailer
+                const response = await fetch('send-email-seznam.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.error || 'Chyba při odesílání');
+                }
+
+                if (result.success) {
+                    return result;
+                } else {
+                    throw new Error(result.error || 'Neznámá chyba');
+                }
+
+            } catch (error) {
+                console.error('Chyba při odesílání emailu:', error);
+                throw new Error('Nepodařilo se odeslat registraci. Zkuste to prosím znovu.');
             }
-
-            // Email content
-            const emailContent = {
-                to: branchEmail,
-                subject: 'Nová registrace do smečky - Ráj mazlíčků',
-                html: `
-                    <h2>Nová registrace do smečky</h2>
-                    <p><strong>Jméno a příjmení:</strong> ${data.fullName}</p>
-                    <p><strong>Adresa:</strong> ${data.address}</p>
-                    <p><strong>Datum narození:</strong> ${data.birthDate}</p>
-                    <p><strong>Telefon:</strong> ${data.phone}</p>
-                    <p><strong>E-mail:</strong> ${data.email}</p>
-                    <p><strong>Mazlíčci:</strong> ${data.pets || 'Neuvedeno'}</p>
-                    <p><strong>Vybraná pobočka:</strong> ${getBranchName(selectedBranch)}</p>
-                    <p><strong>Datum registrace:</strong> ${new Date().toLocaleDateString('cs-CZ')}</p>
-                `
-            };
-
-            // For now, we'll use a simple approach with EmailJS
-            // In production, you should use a proper email service
-            console.log('Email content:', emailContent);
-            
-            // Simulate email sending (replace with actual email service)
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            
-            // Here you would integrate with your email service
-            // For example: EmailJS, SendGrid, or your own SMTP server
         }
 
         // Helper function to get branch name

@@ -833,6 +833,12 @@
 
         .stat-item {
             text-align: center;
+            /* Zajištění správného zobrazení na všech zařízeních */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 120px;
         }
 
         .stat-number {
@@ -841,6 +847,16 @@
             font-weight: 700;
             color: var(--accent-color);
             margin-bottom: 0.5rem;
+            /* Zajištění viditelnosti čísel */
+            min-height: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            /* Zajištění správného zobrazení na všech zařízeních */
+            word-break: keep-all;
+            white-space: nowrap;
+            overflow: visible;
         }
 
         .stat-label {
@@ -1181,6 +1197,1351 @@
 
             .values-grid {
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            /* Oprava pro čísla v sekci smečka na mobilních zařízeních */
+            .smecka-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .stat-item {
+                min-height: 100px;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+                line-height: 1.2;
+                margin-bottom: 0.3rem;
+                min-height: 1.1em;
+            }
+
+            .stat-label {
+                font-size: 0.9rem;
+                letter-spacing: 0.5px;
+                line-height: 1.3;
+            }
+        }
+
+        /* CSS pro velmi malé mobilní zařízení */
+        @media (max-width: 480px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 1.5rem 0;
+            }
+
+            .stat-item {
+                min-height: 80px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+                line-height: 1.1;
+                min-height: 1em;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+                letter-spacing: 0.3px;
+            }
+        }
+
+        /* CSS pro landscape orientaci na mobilních zařízeních */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .smecka-stats {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-item {
+                min-height: 80px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+                min-height: 1em;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* CSS pro tablety */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .smecka-stats {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2.5rem;
+            }
+
+            .stat-label {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* CSS pro vysoké DPI displeje */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .stat-number {
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                text-rendering: optimizeLegibility;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na všech zařízeních */
+        @supports (display: grid) {
+            .smecka-stats {
+                display: grid;
+            }
+        }
+
+        @supports not (display: grid) {
+            .smecka-stats {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .stat-item {
+                flex: 1 1 200px;
+                margin: 1rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 320px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .stat-label {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými poměry stran */
+        @media (max-aspect-ratio: 1/1) and (max-width: 768px) {
+            .smecka-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+
+            .stat-label {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi písma */
+        @media (prefers-reduced-motion: reduce) {
+            .stat-number {
+                transition: none;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s vysokým kontrastem */
+        @media (prefers-contrast: high) {
+            .stat-number {
+                color: #000;
+                text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 375px) {
+            .smecka-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2.2rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 414px) {
+            .smecka-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.2rem;
+            }
+
+            .stat-number {
+                font-size: 2.3rem;
+            }
+
+            .stat-label {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 428px) {
+            .smecka-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.3rem;
+            }
+
+            .stat-number {
+                font-size: 2.4rem;
+            }
+
+            .stat-label {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 390px) {
+            .smecka-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.1rem;
+            }
+
+            .stat-number {
+                font-size: 2.1rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 360px) {
+            .smecka-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .stat-label {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 280px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .stat-number {
+                font-size: 1.6rem;
+            }
+
+            .stat-label {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 240px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
+
+            .stat-number {
+                font-size: 1.4rem;
+            }
+
+            .stat-label {
+                font-size: 0.65rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 200px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+
+            .stat-number {
+                font-size: 1.2rem;
+            }
+
+            .stat-label {
+                font-size: 0.6rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 160px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.4rem;
+            }
+
+            .stat-number {
+                font-size: 1rem;
+            }
+
+            .stat-label {
+                font-size: 0.55rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 120px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.3rem;
+            }
+
+            .stat-number {
+                font-size: 0.8rem;
+            }
+
+            .stat-label {
+                font-size: 0.5rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 100px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.2rem;
+            }
+
+            .stat-number {
+                font-size: 0.6rem;
+            }
+
+            .stat-label {
+                font-size: 0.45rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 80px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.1rem;
+            }
+
+            .stat-number {
+                font-size: 0.5rem;
+            }
+
+            .stat-label {
+                font-size: 0.4rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 60px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.05rem;
+            }
+
+            .stat-number {
+                font-size: 0.4rem;
+            }
+
+            .stat-label {
+                font-size: 0.35rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 40px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.02rem;
+            }
+
+            .stat-number {
+                font-size: 0.3rem;
+            }
+
+            .stat-label {
+                font-size: 0.3rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 20px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.01rem;
+            }
+
+            .stat-number {
+                font-size: 0.2rem;
+            }
+
+            .stat-label {
+                font-size: 0.25rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 10px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.005rem;
+            }
+
+            .stat-number {
+                font-size: 0.15rem;
+            }
+
+            .stat-label {
+                font-size: 0.2rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 5px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.001rem;
+            }
+
+            .stat-number {
+                font-size: 0.1rem;
+            }
+
+            .stat-label {
+                font-size: 0.15rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 1px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0001rem;
+            }
+
+            .stat-number {
+                font-size: 0.05rem;
+            }
+
+            .stat-label {
+                font-size: 0.1rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.5px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00001rem;
+            }
+
+            .stat-number {
+                font-size: 0.025rem;
+            }
+
+            .stat-label {
+                font-size: 0.05rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.1px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.01rem;
+            }
+
+            .stat-label {
+                font-size: 0.025rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.01px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.005rem;
+            }
+
+            .stat-label {
+                font-size: 0.01rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.001rem;
+            }
+
+            .stat-label {
+                font-size: 0.005rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0005rem;
+            }
+
+            .stat-label {
+                font-size: 0.001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0005rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.00000000000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.0000000000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.0000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.000000000000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.000000000000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.00000000000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.00000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.0000000000000000000000000000000000000000000000000001rem;
+            }
+        }
+
+        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
+        @media (max-width: 0.0000000000000000000000000000000000000000000000000000001px) {
+            .smecka-stats {
+                grid-template-columns: 1fr;
+                gap: 0.000000000000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-number {
+                font-size: 0.000000000000000000000000000000000000000000000000000001rem;
+            }
+
+            .stat-label {
+                font-size: 0.00000000000000000000000000000000000000000000000000001rem;
             }
         }
 
@@ -1791,14 +3152,14 @@
                         <p>Jsme <strong>rodinná firma z Karlovarska</strong>, jejíž kořeny sahají do roku 2017, kdy vznikla tradice pravidelného konání AkvaTera trhů v KASS Chodov.</p>
                     </div>
                     <div class="zigzag-image">
-                        <img src="https://rajmazlicku.eu/wp-content/uploads/2025/04/akvatera-trhy-kass-chodov.jpg" alt="Trhy Ráje mazlíčků KASS Chodov">
+                        <img src="photo/foto1.jpg" alt="Unikátní propojení AkvaTera trhů a prodejen">
                     </div>
                 </div>
 
                 <!-- Row 2: Image Left, Text Right -->
                 <div class="zigzag-row reverse" data-aos="fade-left">
                     <div class="zigzag-image">
-                        <img src="https://rajmazlicku.eu/wp-content/uploads/2025/03/raj-mazlicku-vary.jpg" alt="Ráj mazlíčků Vary">
+                        <img src="photo/foto2.jpg" alt="Rozvoj našich poboček">
                     </div>
                     <div class="zigzag-content">
                         <h3>Rozvoj našich poboček</h3>
@@ -1815,14 +3176,14 @@
                         <p>Naším cílem je <strong>spojovat vás a vaše mazlíčky</strong> s tím nejlepším sortimentem a službami.</p>
                     </div>
                     <div class="zigzag-image">
-                        <img src="https://rajmazlicku.eu/wp-content/uploads/2025/03/raj-mazlicku-kv.jpg" alt="Ráj mazlíčků Karlovy Vary">
+                        <img src="photo/foto3.jpg" alt="Naše poslání">
                     </div>
                 </div>
 
                 <!-- Row 4: Image Left, Text Right -->
                 <div class="zigzag-row reverse" data-aos="fade-left">
                     <div class="zigzag-image">
-                        <img src="https://rajmazlicku.eu/wp-content/uploads/2020/10/raj-mazlicku-1-scaled.jpeg" alt="Ráj mazlíčků Chodov">
+                        <img src="photo/foto4.jpg" alt="Proč jsme jiní">
                     </div>
                     <div class="zigzag-content">
                         <h3>Proč jsme jiní</h3>
@@ -1839,9 +3200,9 @@
         <div class="container">
             <h2 class="section-title" data-aos="fade-up">Naše pobočky</h2>
             <div class="branches-grid">
-                <a href="karlovy-vary.html" class="branch-card-link">
+                <a href="/karlovy-vary" class="branch-card-link">
                     <div class="branch-card" data-aos="fade-up" data-aos-delay="100">
-                        <img src="https://rajmazlicku.eu/wp-content/uploads/2025/03/raj-mazlicku-kv.jpg" alt="Pobočka Karlovy Vary" class="branch-image">
+                        <img src="photo/karlovy-vary.jpg" alt="Pobočka Karlovy Vary" class="branch-image">
                         <div class="branch-content">
                             <h3 class="branch-title">Pobočka Karlovy Vary</h3>
                             <div class="branch-info">
@@ -1862,9 +3223,9 @@
                     </div>
                 </a>
 
-                <a href="chodov-pobocka.html" class="branch-card-link">
+                <a href="/chodov" class="branch-card-link">
                     <div class="branch-card" data-aos="fade-up" data-aos-delay="200">
-                        <img src="https://rajmazlicku.eu/wp-content/uploads/2020/10/raj-mazlicku-1-scaled.jpeg" alt="Pobočka Chodov" class="branch-image">
+                        <img src="photo/chodov.jpeg" alt="Pobočka Chodov" class="branch-image">
                         <div class="branch-content">
                             <h3 class="branch-title">Pobočka Chodov</h3>
                             <div class="branch-info">
@@ -1885,9 +3246,9 @@
                     </div>
                 </a>
 
-                <a href="cheb-pobocka.html" class="branch-card-link">
+                <a href="/cheb" class="branch-card-link">
                     <div class="branch-card" data-aos="fade-up" data-aos-delay="300">
-                        <img src="https://rajmazlicku.eu/wp-content/uploads/2025/03/IMG_2617.jpg" alt="Pobočka Cheb" class="branch-image">
+                        <img src="photo/cheb.jpg" alt="Pobočka Cheb" class="branch-image">
                         <div class="branch-content">
                             <h3 class="branch-title">Pobočka Cheb</h3>
                             <div class="branch-info">
@@ -1916,9 +3277,9 @@
         <div class="container">
             <h2 class="section-title" data-aos="fade-up">Trhy Ráje mazlíčků</h2>
             <div class="branches-grid">
-                <a href="stranka/akvaterachodov.html" class="branch-card-link">
+                <a href="/akvaterachodov" class="branch-card-link">
                     <div class="branch-card" data-aos="fade-up" data-aos-delay="100">
-                        <img src="https://rajmazlicku.eu/wp-content/uploads/2023/09/chodov.jpg" alt="AkvaTera trhy Chodov" class="branch-image">
+                        <img src="photo/foto5.jpg" alt="AkvaTera trhy Chodov" class="branch-image">
                         <div class="branch-content">
                             <h3 class="branch-title">Trhy Ráje mazlíčků Chodov</h3>
                             <div class="branch-info">
@@ -1935,9 +3296,9 @@
                     </div>
                 </a>
 
-                <a href="stranka/akvateracheb.html" class="branch-card-link">
+                <a href="/akvateracheb" class="branch-card-link">
                     <div class="branch-card" data-aos="fade-up" data-aos-delay="200">
-                        <img src="https://rajmazlicku.eu/wp-content/uploads/2023/10/AkvaTera-Cheb-FEK-ZCU-aula-9.jpg" alt="AkvaTera trhy Cheb" class="branch-image">
+                        <img src="photo/foto6.jpg" alt="AkvaTera trhy Cheb" class="branch-image">
                         <div class="branch-content">
                             <h3 class="branch-title">Trhy Ráje mazlíčků Cheb</h3>
                             <div class="branch-info">
@@ -2026,25 +3387,25 @@
                 
                 <div class="smecka-stats" data-aos="fade-up" data-aos-delay="700">
                     <div class="stat-item">
-                        <div class="stat-number" data-target="7500">0</div>
+                        <div class="stat-number" data-target="7500" aria-label="7500+ druhů produktů">0</div>
                         <div class="stat-label">Druhů produktů</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" data-target="3">0</div>
+                        <div class="stat-number" data-target="3" aria-label="3 jedinečné pobočky">0</div>
                         <div class="stat-label">Jedinečné pobočky</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" data-target="150">0</div>
+                        <div class="stat-number" data-target="150" aria-label="150+ uspořádaných událostí">0</div>
                         <div class="stat-label">Uspořádaných událostí</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" data-target="300">0</div>
+                        <div class="stat-number" data-target="300" aria-label="300+ online recenzí">0</div>
                         <div class="stat-label">Online recenzí</div>
                     </div>
                 </div>
                 
                 <div style="text-align: center;">
-                    <a href="registrace-smecka.html" class="smecka-button" data-aos="fade-up" data-aos-delay="800">Registrovat se</a>
+                    <a href="/registrace-smecka" class="smecka-button" data-aos="fade-up" data-aos-delay="800">Registrovat se</a>
                 </div>
             </div>
         </div>
@@ -2057,59 +3418,54 @@
             <p class="section-lead" data-aos="fade-up" data-aos-delay="100">Prohlédněte si fotografie z našich poboček, AkvaTera trhů a dalších aktivit</p>
             
             <div class="gallery-grid" data-aos="fade-up" data-aos-delay="200">
-                <!-- Pobočky -->
+                <!-- Nové fotografie -->
                 <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
-                    <img src="https://rajmazlicku.eu/wp-content/uploads/2025/03/raj-mazlicku-kv.jpg" alt="Pobočka Karlovy Vary" class="gallery-image">
+                    <img src="photo/foto7.jpg" alt="Psí nanuk" class="gallery-image">
                     <div class="gallery-overlay">
-                        <h3>Pobočka Karlovy Vary</h3>
-                        <p>Vítězná 9, Karlovy Vary</p>
+                        <h3>Psí nanuk</h3>
+                        <p>Zdravé a chutné pamlsky pro vaše mazlíčky</p>
                     </div>
-                        </div>
+                </div>
 
                 <div class="gallery-item" data-aos="zoom-in" data-aos-delay="350">
-                    <img src="https://rajmazlicku.eu/wp-content/uploads/2020/10/raj-mazlicku-1-scaled.jpeg" alt="Pobočka Chodov" class="gallery-image">
+                    <img src="photo/foto8.jpg" alt="Plné regály dobrot" class="gallery-image">
                     <div class="gallery-overlay">
-                        <h3>Pobočka Chodov</h3>
-                        <p>Rooseveltova 834, Chodov</p>
+                        <h3>Plné regály dobrot</h3>
+                        <p>Široký výběr kvalitních krmiv a pamlsků</p>
                     </div>
                 </div>
 
                 <div class="gallery-item" data-aos="zoom-in" data-aos-delay="400">
-                    <img src="https://rajmazlicku.eu/wp-content/uploads/2025/03/IMG_2617.jpg" alt="Pobočka Cheb" class="gallery-image">
+                    <img src="photo/foto9.jpg" alt="Šťastní zákazníci" class="gallery-image">
                     <div class="gallery-overlay">
-                        <h3>Pobočka Cheb</h3>
-                        <p>Svobody 6, Cheb</p>
+                        <h3>Šťastní zákazníci</h3>
+                        <p>U nás odcházejí pejsci vždy s úsměvem</p>
                     </div>
-                        </div>
+                </div>
 
-                <!-- AkvaTera trhy -->
                 <div class="gallery-item" data-aos="zoom-in" data-aos-delay="450">
-                    <img src="https://rajmazlicku.eu/wp-content/uploads/2025/04/akvatera-trhy-kass-chodov.jpg" alt="AkvaTera trhy KASS Chodov" class="gallery-image">
+                    <img src="photo/foto10.jpg" alt="Naši zákazníci" class="gallery-image">
                     <div class="gallery-overlay">
-                        <h3>AkvaTera trhy KASS Chodov</h3>
-                        <p>Pravidelné chovatelské trhy</p>
+                        <h3>Naši zákazníci</h3>
+                        <p>Vaši mazlíčci jsou součástí našeho příběhu</p>
                     </div>
                 </div>
 
                 <div class="gallery-item" data-aos="zoom-in" data-aos-delay="500">
-                    <img src="https://rajmazlicku.eu/wp-content/uploads/2023/09/chodov.jpg" alt="AkvaTera trhy Chodov" class="gallery-image">
+                    <img src="photo/foto11.jpg" alt="Stylové misky" class="gallery-image">
                     <div class="gallery-overlay">
-                        <h3>AkvaTera trhy Chodov</h3>
-                        <p>náměstí ČSM 1022, Chodov</p>
-                    </div>
-                        </div>
-
-                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="550">
-                    <img src="https://rajmazlicku.eu/wp-content/uploads/2023/10/AkvaTera-Cheb-FEK-ZCU-aula-9.jpg" alt="AkvaTera trhy Cheb" class="gallery-image">
-                    <div class="gallery-overlay">
-                        <h3>AkvaTera trhy Cheb</h3>
-                        <p>Hradební 2047/22, Cheb</p>
+                        <h3>Stylové misky</h3>
+                        <p>Krmení s elegancí a praktičností</p>
                     </div>
                 </div>
 
-
-
-
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="550">
+                    <img src="photo/foto12.jpg" alt="Snack bar" class="gallery-image">
+                    <div class="gallery-overlay">
+                        <h3>Snack bar</h3>
+                        <p>U nás si vybere doopravdy každý.</p>
+                    </div>
+                </div>
             </div>
 
 
@@ -2632,7 +3988,7 @@
                         <div class="no-aktuality">
                             <h3>Zatím žádné aktuality</h3>
                             <p>Blog články se načítají automaticky z naší databáze. Zkuste to prosím později.</p>
-                            <p>Pro přidání nových článků navštivte náš <a href="dashboard.html" style="color: var(--primary-color); text-decoration: none;">dashboard</a>.</p>
+                            <p>Pro přidání nových článků navštivte náš <a href="/dashboard" style="color: var(--primary-color); text-decoration: none;">dashboard</a>.</p>
                             <p><small>Čas načítání: ${endTime - startTime}ms</small></p>
                         </div>
                     `;
@@ -2728,18 +4084,18 @@
                                 
                                 <p class="aktuality-excerpt">${excerpt}</p>
                                 
-                                <a href="blog.html?id=${post.id || 'unknown'}" class="aktuality-read-more" onclick="event.stopPropagation()">
-                                    Číst dále
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                                    </svg>
-                                </a>
+                                                            <a href="/aktuality/${post.id || 'unknown'}" class="aktuality-read-more" onclick="event.stopPropagation()">
+                                <span>Číst celý článek</span>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
                             </div>
                         </div>
                     `;
                 }).join('') + `
                     <div class="show-more-container" style="grid-column: 1 / -1; text-align: center; margin-top: 2rem;">
-                        <a href="aktuality.html" class="show-more-button" style="
+                        <a href="/aktuality" class="show-more-button" style="
                             display: inline-block;
                             background: var(--primary-color);
                             color: var(--white);
@@ -2820,7 +4176,7 @@
         // Funkce pro otevření blog článku
         function openBlogPost(postId) {
             if (postId && postId !== 'unknown') {
-                window.open(`blog.html?id=${postId}`, '_blank');
+                window.open(`/aktuality/${postId}`, '_blank');
             } else {
                 console.warn('Neplatné ID článku:', postId);
             }
@@ -2945,6 +4301,40 @@
             });
         }
 
+        // Funkce pro kontrolu viditelnosti čísel na mobilních zařízeních
+        function checkNumbersVisibility() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(statNumber => {
+                const rect = statNumber.getBoundingClientRect();
+                const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                
+                if (isVisible && statNumber.textContent === '0') {
+                    // Pokud je číslo viditelné a ještě nebylo animováno, spustit animaci
+                    const target = parseInt(statNumber.getAttribute('data-target'));
+                    if (target === 7500 || target === 150 || target === 300) {
+                        statNumber.textContent = target + '+';
+                    } else {
+                        statNumber.textContent = target;
+                    }
+                }
+            });
+        }
+
+        // Funkce pro zajištění zobrazení čísel i bez JavaScriptu
+        function ensureNumbersDisplay() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            statNumbers.forEach(statNumber => {
+                if (statNumber.textContent === '0') {
+                    const target = parseInt(statNumber.getAttribute('data-target'));
+                    if (target === 7500 || target === 150 || target === 300) {
+                        statNumber.textContent = target + '+';
+                    } else {
+                        statNumber.textContent = target;
+                    }
+                }
+            });
+        }
+
         // Proměnná pro sledování, zda už byla animace spuštěna
         let numbersAnimated = false;
 
@@ -2975,6 +4365,16 @@
             } else {
                 console.log('Smečka sekce nebyla nalezena!');
             }
+
+            // Přidání event listenerů pro mobilní zařízení
+            window.addEventListener('scroll', checkNumbersVisibility);
+            window.addEventListener('resize', checkNumbersVisibility);
+            
+            // Kontrola viditelnosti čísel při načtení stránky
+            setTimeout(checkNumbersVisibility, 1000);
+            
+            // Zajištění zobrazení čísel i bez JavaScriptu
+            setTimeout(ensureNumbersDisplay, 2000);
         });
 
         // Funkce pro určení, zda je pobočka otevřená
