@@ -3764,6 +3764,12 @@
                     '<div class="error-message">Chyba: Firebase SDK se nenačetl. Zkontrolujte připojení k internetu.</div>';
             }
         });
+
+        // Event listener pro Firebase připravenost
+        window.addEventListener('firebaseReady', function(event) {
+            console.log('Firebase je připraven!', event.detail);
+            // Můžeme zde spustit načítání aktualit
+        });
     </script>
     <script src="demo-post.js"></script>
     <script>
@@ -3961,8 +3967,15 @@
 
                 console.log('Firebase je dostupný, inicializuji Firestore...');
                 
-                // Načtení z Firestore
-                const db = firebase.firestore();
+                // Použijeme již inicializovanou databázi nebo vytvoříme novou
+                let db;
+                if (window.firebaseDB) {
+                    db = window.firebaseDB;
+                    console.log('Používám již inicializovanou Firebase databázi');
+                } else {
+                    db = firebase.firestore();
+                    console.log('Vytvářím novou Firebase databázi');
+                }
                 console.log('Firestore inicializován, načítám kolekci posts...');
                 
                 // Nejdříve zkusíme jednoduchý dotaz bez řazení
@@ -4200,17 +4213,17 @@
         function waitForFirebase() {
             return new Promise((resolve, reject) => {
                 let attempts = 0;
-                const maxAttempts = 10;
+                const maxAttempts = 20; // Zvýšeno na 20 pokusů
                 
                 const checkFirebase = () => {
                     attempts++;
                     console.log(`Kontrola Firebase připravenosti - pokus ${attempts}/${maxAttempts}`);
                     
-                    if (typeof firebase !== 'undefined' && firebase.firestore) {
+                    if (typeof firebase !== 'undefined' && firebase.firestore && window.firebaseDB) {
                         console.log('Firebase je připraven!');
                         resolve();
                     } else if (attempts >= maxAttempts) {
-                        reject(new Error('Firebase se nepodařilo inicializovat během 5 sekund'));
+                        reject(new Error('Firebase se nepodařilo inicializovat během 10 sekund'));
                     } else {
                         setTimeout(checkFirebase, 500);
                     }
