@@ -8,69 +8,138 @@
     {
       "src": "*.php",
       "use": "@vercel/php"
+    },
+    {
+      "src": "*.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "*.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "photo/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
-      "src": "/akvaterachodov",
-      "dest": "/stranka/akvaterachodov.html"
-    },
-    {
-      "src": "/akvateracheb", 
-      "dest": "/stranka/akvateracheb.html"
-    },
-    {
-      "src": "/chodov",
+      "src": "^/chodov/?$",
       "dest": "/chodov.html"
     },
     {
-      "src": "/cheb",
+      "src": "^/cheb/?$",
       "dest": "/cheb.html"
     },
     {
-      "src": "/karlovy-vary",
+      "src": "^/karlovy-vary/?$",
       "dest": "/karlovy-vary.html"
     },
     {
-      "src": "/aktuality",
+      "src": "^/aktuality/?$",
       "dest": "/aktuality.html"
     },
     {
-      "src": "/vop",
-      "dest": "/vop.html"
-    },
-    {
-      "src": "/podminky-smecka",
-      "dest": "/podminky-smecka.html"
-    },
-    {
-      "src": "/registrace-smecka",
-      "dest": "/registrace-smecka.html"
-    },
-    {
-      "src": "/gdpr",
+      "src": "^/gdpr/?$",
       "dest": "/gdpr.html"
     },
     {
-      "src": "/dashboard",
-      "dest": "/dashboard.html"
+      "src": "^/vop/?$",
+      "dest": "/vop.html"
     },
     {
-      "src": "/test",
-      "dest": "/test.html"
-    },
-    {
-      "src": "/website",
+      "src": "^/website/?$",
       "dest": "/website.html"
     },
     {
-      "src": "/(.*)",
+      "src": "^/dashboard/?$",
+      "dest": "/dashboard.html"
+    },
+    {
+      "src": "^/test/?$",
+      "dest": "/test.html"
+    },
+    {
+      "src": "^/debug/?$",
+      "dest": "/debug.html"
+    },
+    {
+      "src": "^/hero-update/?$",
+      "dest": "/hero-update.html"
+    },
+    {
+      "src": "^/index-simple/?$",
+      "dest": "/index-simple.html"
+    },
+    {
+      "src": "^/remove-demo-post/?$",
+      "dest": "/remove-demo-post.html"
+    },
+    {
+      "src": "^/test-blog/?$",
+      "dest": "/test-blog.html"
+    },
+    {
+      "src": "^/test-firebase/?$",
+      "dest": "/test-firebase.html"
+    },
+    {
+      "src": "^/akvaterachodov/?$",
+      "dest": "/stranka/akvaterachodov.html"
+    },
+    {
+      "src": "^/akvateracheb/?$",
+      "dest": "/stranka/akvateracheb.html"
+    },
+    {
+      "src": "^/akvateracheb/(.*)$",
+      "dest": "/stranka/akvateracheb.html"
+    },
+    {
+      "src": "^/akvaterachodov/(.*)$",
+      "dest": "/stranka/akvaterachodov.html"
+    },
+    {
+      "src": "^/stranka/(.*)$",
+      "dest": "/stranka/$1"
+    },
+    {
+      "src": "^/photo/(.*)$",
+      "dest": "/photo/$1"
+    },
+    {
+      "src": "^/vendor/(.*)$",
+      "dest": "/vendor/$1"
+    },
+    {
+      "src": "^/(.*)\\.html$",
+      "dest": "/$1.html"
+    },
+    {
+      "src": "^/(.*)$",
       "dest": "/$1"
     }
   ],
   "headers": [
     {
-      "source": "**/*.js",
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    },
+    {
+      "source": "/photo/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -79,27 +148,13 @@
       ]
     },
     {
-      "source": "**/*.css",
-      "headers": [
-        {
-          "key": "Cache-Control", 
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "**/*.html",
+      "source": "/(.*)\\.(js|css)$",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }
-  ],
-  "functions": {
-    "router.php": {
-      "runtime": "vercel-php@0.6.0"
-    }
-  }
+  ]
 }
