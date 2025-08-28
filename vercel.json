@@ -2,100 +2,84 @@
   "version": 2,
   "rewrites": [
     {
-      "source": "^/chodov/?$",
+      "source": "/chodov",
       "destination": "/chodov.html"
     },
     {
-      "source": "^/cheb/?$",
+      "source": "/cheb",
       "destination": "/cheb.html"
     },
     {
-      "source": "^/karlovy-vary/?$",
+      "source": "/karlovy-vary",
       "destination": "/karlovy-vary.html"
     },
     {
-      "source": "^/aktuality/?$",
+      "source": "/aktuality",
       "destination": "/aktuality.html"
     },
     {
-      "source": "^/gdpr/?$",
+      "source": "/gdpr",
       "destination": "/gdpr.html"
     },
     {
-      "source": "^/vop/?$",
+      "source": "/vop",
       "destination": "/vop.html"
     },
     {
-      "source": "^/website/?$",
+      "source": "/website",
       "destination": "/website.html"
     },
     {
-      "source": "^/dashboard/?$",
+      "source": "/dashboard",
       "destination": "/dashboard.html"
     },
     {
-      "source": "^/test/?$",
+      "source": "/test",
       "destination": "/test.html"
     },
     {
-      "source": "^/debug/?$",
+      "source": "/debug",
       "destination": "/debug.html"
     },
     {
-      "source": "^/hero-update/?$",
+      "source": "/hero-update",
       "destination": "/hero-update.html"
     },
     {
-      "source": "^/index-simple/?$",
+      "source": "/index-simple",
       "destination": "/index-simple.html"
     },
     {
-      "source": "^/remove-demo-post/?$",
+      "source": "/remove-demo-post",
       "destination": "/remove-demo-post.html"
     },
     {
-      "source": "^/test-blog/?$",
+      "source": "/test-blog",
       "destination": "/test-blog.html"
     },
     {
-      "source": "^/test-firebase/?$",
+      "source": "/test-firebase",
       "destination": "/test-firebase.html"
     },
     {
-      "source": "^/akvaterachodov/?$",
+      "source": "/akvaterachodov",
       "destination": "/stranka/akvaterachodov.html"
     },
     {
-      "source": "^/akvateracheb/?$",
+      "source": "/akvateracheb",
       "destination": "/stranka/akvateracheb.html"
     },
     {
-      "source": "^/akvateracheb/(.*)$",
-      "destination": "/stranka/akvateracheb.html"
+      "source": "/stranka/:path*",
+      "destination": "/stranka/:path*"
     },
     {
-      "source": "^/akvaterachodov/(.*)$",
-      "destination": "/stranka/akvaterachodov.html"
+      "source": "/photo/:path*",
+      "destination": "/photo/:path*"
     },
     {
-      "source": "^/stranka/(.*)$",
-      "destination": "/stranka/$1"
-    },
-    {
-      "source": "^/photo/(.*)$",
-      "destination": "/photo/$1"
-    },
-    {
-      "source": "^/vendor/(.*)$",
-      "destination": "/vendor/$1"
-    },
-    {
-      "source": "^/(.*)\\.html$",
-      "destination": "/$1.html"
-    },
-    {
-      "source": "^/(.*)$",
-      "destination": "/$1"
+      "source": "/vendor/:path*",
+      "destination": "/vendor/:path*"
     }
   ],
   "headers": [
