@@ -1,101 +1,101 @@
 {
   "version": 2,
-  "routes": [
+  "rewrites": [
     {
-      "src": "^/chodov/?$",
-      "dest": "/chodov.html"
+      "source": "^/chodov/?$",
+      "destination": "/chodov.html"
     },
     {
-      "src": "^/cheb/?$",
-      "dest": "/cheb.html"
+      "source": "^/cheb/?$",
+      "destination": "/cheb.html"
     },
     {
-      "src": "^/karlovy-vary/?$",
-      "dest": "/karlovy-vary.html"
+      "source": "^/karlovy-vary/?$",
+      "destination": "/karlovy-vary.html"
     },
     {
-      "src": "^/aktuality/?$",
-      "dest": "/aktuality.html"
+      "source": "^/aktuality/?$",
+      "destination": "/aktuality.html"
     },
     {
-      "src": "^/gdpr/?$",
-      "dest": "/gdpr.html"
+      "source": "^/gdpr/?$",
+      "destination": "/gdpr.html"
     },
     {
-      "src": "^/vop/?$",
-      "dest": "/vop.html"
+      "source": "^/vop/?$",
+      "destination": "/vop.html"
     },
     {
-      "src": "^/website/?$",
-      "dest": "/website.html"
+      "source": "^/website/?$",
+      "destination": "/website.html"
     },
     {
-      "src": "^/dashboard/?$",
-      "dest": "/dashboard.html"
+      "source": "^/dashboard/?$",
+      "destination": "/dashboard.html"
     },
     {
-      "src": "^/test/?$",
-      "dest": "/test.html"
+      "source": "^/test/?$",
+      "destination": "/test.html"
     },
     {
-      "src": "^/debug/?$",
-      "dest": "/debug.html"
+      "source": "^/debug/?$",
+      "destination": "/debug.html"
     },
     {
-      "src": "^/hero-update/?$",
-      "dest": "/hero-update.html"
+      "source": "^/hero-update/?$",
+      "destination": "/hero-update.html"
     },
     {
-      "src": "^/index-simple/?$",
-      "dest": "/index-simple.html"
+      "source": "^/index-simple/?$",
+      "destination": "/index-simple.html"
     },
     {
-      "src": "^/remove-demo-post/?$",
-      "dest": "/remove-demo-post.html"
+      "source": "^/remove-demo-post/?$",
+      "destination": "/remove-demo-post.html"
     },
     {
-      "src": "^/test-blog/?$",
-      "dest": "/test-blog.html"
+      "source": "^/test-blog/?$",
+      "destination": "/test-blog.html"
     },
     {
-      "src": "^/test-firebase/?$",
-      "dest": "/test-firebase.html"
+      "source": "^/test-firebase/?$",
+      "destination": "/test-firebase.html"
     },
     {
-      "src": "^/akvaterachodov/?$",
-      "dest": "/stranka/akvaterachodov.html"
+      "source": "^/akvaterachodov/?$",
+      "destination": "/stranka/akvaterachodov.html"
     },
     {
-      "src": "^/akvateracheb/?$",
-      "dest": "/stranka/akvateracheb.html"
+      "source": "^/akvateracheb/?$",
+      "destination": "/stranka/akvateracheb.html"
     },
     {
-      "src": "^/akvateracheb/(.*)$",
-      "dest": "/stranka/akvateracheb.html"
+      "source": "^/akvateracheb/(.*)$",
+      "destination": "/stranka/akvateracheb.html"
     },
     {
-      "src": "^/akvaterachodov/(.*)$",
-      "dest": "/stranka/akvaterachodov.html"
+      "source": "^/akvaterachodov/(.*)$",
+      "destination": "/stranka/akvaterachodov.html"
     },
     {
-      "src": "^/stranka/(.*)$",
-      "dest": "/stranka/$1"
+      "source": "^/stranka/(.*)$",
+      "destination": "/stranka/$1"
     },
     {
-      "src": "^/photo/(.*)$",
-      "dest": "/photo/$1"
+      "source": "^/photo/(.*)$",
+      "destination": "/photo/$1"
     },
     {
-      "src": "^/vendor/(.*)$",
-      "dest": "/vendor/$1"
+      "source": "^/vendor/(.*)$",
+      "destination": "/vendor/$1"
     },
     {
-      "src": "^/(.*)\\.html$",
-      "dest": "/$1.html"
+      "source": "^/(.*)\\.html$",
+      "destination": "/$1.html"
     },
     {
-      "src": "^/(.*)$",
-      "dest": "/$1"
+      "source": "^/(.*)$",
+      "destination": "/$1"
     }
   ],
   "headers": [
