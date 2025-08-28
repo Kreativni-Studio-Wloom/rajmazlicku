@@ -1,27 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "*.php",
-      "use": "@vercel/php"
-    },
-    {
-      "src": "*.js",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "*.css",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "photo/**",
-      "use": "@vercel/static"
-    }
-  ],
   "routes": [
     {
       "src": "^/chodov/?$",
