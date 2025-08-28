@@ -95,6 +95,21 @@ Options -Indexes
     RewriteRule ^akvaterachodov/?$ stranka/akvaterachodov.html [L]
     RewriteRule ^akvateracheb/?$ stranka/akvateracheb.html [L]
     
+    # Pravidla pro pobočky (bez .html přípon)
+    RewriteRule ^chodov/?$ chodov.html [L]
+    RewriteRule ^cheb/?$ cheb.html [L]
+    RewriteRule ^karlovy-vary/?$ karlovy-vary.html [L]
+    
+    # Pravidla pro ostatní stránky
+    RewriteRule ^aktuality/?$ aktuality.html [L]
+    RewriteRule ^vop/?$ vop.html [L]
+    RewriteRule ^podminky-smecka/?$ podminky-smecka.html [L]
+    RewriteRule ^registrace-smecka/?$ registrace-smecka.html [L]
+    RewriteRule ^gdpr/?$ gdpr.html [L]
+    RewriteRule ^dashboard/?$ dashboard.html [L]
+    RewriteRule ^test/?$ test.html [L]
+    RewriteRule ^website/?$ website.html [L]
+    
     # Přesměrování starých .html URL na nové bez přípon (301 redirect)
     RewriteCond %{THE_REQUEST} /([^.]+)\.html [NC]
     RewriteRule ^ /%1 [R=301,L]

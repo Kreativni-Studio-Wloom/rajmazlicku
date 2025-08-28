@@ -26,21 +26,10 @@ if (preg_match('/^\/aktuality\/(.+)$/', $path, $matches)) {
     }
 }
 
-// Mapování specifických URL na soubory
+// Mapování specifických URL na soubory (pouze pro složky a speciální případy)
 $url_mapping = [
     '/akvaterachodov' => '/stranka/akvaterachodov.html',
-    '/akvateracheb' => '/stranka/akvateracheb.html',
-    '/chodov' => '/chodov.html',
-    '/cheb' => '/cheb.html',
-    '/karlovy-vary' => '/karlovy-vary.html',
-    '/aktuality' => '/aktuality.html',
-    '/vop' => '/vop.html',
-    '/podminky-smecka' => '/podminky-smecka.html',
-    '/registrace-smecka' => '/registrace-smecka.html',
-    '/gdpr' => '/gdpr.html',
-    '/dashboard' => '/dashboard.html',
-    '/test' => '/test.html',
-    '/website' => '/website.html'
+    '/akvateracheb' => '/stranka/akvateracheb.html'
 ];
 
 // Kontrola, zda existuje přímé mapování
