@@ -70,6 +70,14 @@
       "destination": "/stranka/akvateracheb.html"
     },
     {
+      "source": "/registrace-smecka",
+      "destination": "/registrace-smecka.html"
+    },
+    {
+      "source": "/podminky-smecka",
+      "destination": "/podminky-smecka.html"
+    },
+    {
       "source": "/stranka/:path*",
       "destination": "/stranka/:path*"
     },
@@ -80,6 +88,10 @@
     {
       "source": "/vendor/:path*",
       "destination": "/vendor/:path*"
+    },
+    {
+      "source": "/blog/:id",
+      "destination": "/aktuality.html"
     }
   ],
   "headers": [
