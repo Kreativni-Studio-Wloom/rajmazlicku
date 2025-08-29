@@ -57,6 +57,15 @@
     
     # Nastavit Referrer Policy
     Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Přidat favicon hlavičku pro všechny stránky
+    Header always set Link "</zvirata-bile.png>; rel=icon; type=image/png"
+    
+    # Přidat cache hlavičky pro favicon
+    <Files "zvirata-bile.png">
+        Header set Cache-Control "public, max-age=31536000"
+        Header set Expires "Thu, 31 Dec 2025 23:59:59 GMT"
+    </Files>
 </IfModule>
 
 # Zakázat directory browsing
@@ -81,8 +90,29 @@ Options -Indexes
     # Nastavit base URL (důležité pro mobilní zařízení)
     RewriteBase /
     
+    # Nechat statické soubory projít bez zpracování
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule \.(png|jpg|jpeg|gif|svg|ico|css|js|woff|woff2|ttf|eot)$ - [L]
+    
     # Přesměrovat / na index.html
     RewriteRule ^$ index.html [L]
+    
+    # Pravidla pro favicon - načítat z kořenového adresáře
+    RewriteRule ^favicon\.ico$ zvirata-bile.png [L]
+    RewriteRule ^favicon\.png$ zvirata-bile.png [L]
+    RewriteRule ^zvirata-bile\.png$ zvirata-bile.png [L]
+    RewriteRule ^apple-touch-icon\.png$ zvirata-bile.png [L]
+    RewriteRule ^apple-touch-icon-precomposed\.png$ zvirata-bile.png [L]
+    RewriteRule ^apple-touch-icon-(\d+x\d+)\.png$ zvirata-bile.png [L]
+    
+    # Pravidla pro různé velikosti favicon
+    RewriteRule ^favicon-(\d+x\d+)\.png$ zvirata-bile.png [L]
+    RewriteRule ^icon-(\d+x\d+)\.png$ zvirata-bile.png [L]
+    
+    # Pravidlo pro favicon na všech stránkách bez .html
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([^/]+)/?$ $1.html [L]
     
     # Specifická pravidla pro podstránky ve složce stranka/
     RewriteRule ^akvaterachodov/?$ stranka/akvaterachodov.html [L]

@@ -6,8 +6,39 @@
     <title>Chovatelské potřeby Ráj mazlíčků</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="photo/zvirata-bile.png">
-    <link rel="shortcut icon" type="image/png" href="photo/zvirata-bile.png">
+    <link rel="icon" type="image/png" href="/zvirata-bile.png">
+    <link rel="shortcut icon" type="image/png" href="/zvirata-bile.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/zvirata-bile.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/zvirata-bile.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/zvirata-bile.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="/zvirata-bile.png">
+    <link rel="icon" type="image/png" sizes="128x128" href="/zvirata-bile.png">
+    <link rel="icon" type="image/png" sizes="256x256" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/zvirata-bile.png">
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/zvirata-bile.png">
+    <link rel="msapplication-TileImage" href="/zvirata-bile.png">
+    <link rel="msapplication-TileColor" content="#00a79e">
+    <meta name="msapplication-TileColor" content="#00a79e">
+    <meta name="theme-color" content="#00a79e">
+    
     <meta name="description" content="Přední chovatelské potřeby a Trhy Ráje mazlíčků v Karlovarském kraji. Spojujeme vás a vaše mazlíčky. Navštivte nás.">
     
     <!-- Google Fonts -->
@@ -83,6 +114,11 @@
 
         .logo:hover {
             transform: scale(1.05);
+        }
+
+        .logo-link {
+            text-decoration: none;
+            display: block;
         }
 
         .nav-links {
@@ -2654,38 +2690,6 @@
             }
         }
 
-        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
-        @media (max-width: 0.00000000000000000000000000000000000000000000000000001px) {
-            .smecka-stats {
-                grid-template-columns: 1fr;
-                gap: 0.00000000000000000000000000000000000001rem;
-            }
-
-            .stat-number {
-                font-size: 0.00000000000000000000000000000001rem;
-            }
-
-            .stat-label {
-                font-size: 0.00000000000000000000000000000001rem;
-            }
-        }
-
-        /* CSS pro zajištění správného zobrazení na zařízeních s různými velikostmi viewportu */
-        @media (max-width: 0.000000000000000000000000000000000000000000000000000001px) {
-            .smecka-stats {
-                grid-template-columns: 1fr;
-                gap: 0.00000000000000000000000000000000000001rem;
-            }
-
-            .stat-number {
-                font-size: 0.00000000000000000000000000000001rem;
-            }
-
-            .stat-label {
-                font-size: 0.00000000000000000000000000000001rem;
-            }
-        }
-
         /* Animations */
         @keyframes slideInUp {
             from {
@@ -3238,12 +3242,14 @@
         }
     </style>
 </head>
-<body>
+<body id="top">
     <!-- Header -->
     <header class="header" id="header">
         <div class="container">
             <nav class="nav">
-                <img src="photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
+                <a href="#top" class="logo-link">
+                    <img src="photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
+                </a>
                 <ul class="nav-links">
                     <li><a href="#branches">Pobočky</a></li>
                     <li><a href="#akvatera">Trhy</a></li>
@@ -3965,7 +3971,19 @@
             console.error('Chyba při inicializaci AOS:', error);
         }
 
+
+
         console.log('Přidávám scroll event listener...');
+
+        // Debug favicon
+        console.log('Kontroluji favicon...');
+        const favicons = document.querySelectorAll('link[rel*="icon"]');
+        console.log('Nalezené favicon tagy:', favicons.length);
+        favicons.forEach((favicon, index) => {
+            console.log(`Favicon ${index + 1}:`, favicon.rel, favicon.href);
+        });
+
+
         
         // Header scroll effect
         window.addEventListener('scroll', () => {

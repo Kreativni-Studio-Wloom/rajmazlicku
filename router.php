@@ -8,6 +8,72 @@ $path = parse_url($request_uri, PHP_URL_PATH);
 // Odstranit trailing slash
 $path = rtrim($path, '/');
 
+// Favicon aliasy - přesměrovat na zvirata-bile.png
+$favicon_aliases = [
+    '/favicon.ico',
+    '/favicon.png',
+    '/apple-touch-icon.png',
+    '/apple-touch-icon-precomposed.png'
+];
+
+if (in_array($path, $favicon_aliases)) {
+    $favicon_path = __DIR__ . '/zvirata-bile.png';
+    if (file_exists($favicon_path)) {
+        header("Content-Type: image/png");
+        header("Cache-Control: public, max-age=31536000");
+        header("Expires: Thu, 31 Dec 2025 23:59:59 GMT");
+        readfile($favicon_path);
+        exit;
+    }
+}
+
+// Nechat statické soubory projít bez zpracování
+$extension = pathinfo($path, PATHINFO_EXTENSION);
+$static_extensions = ['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 'css', 'js', 'woff', 'woff2', 'ttf', 'eot'];
+if (in_array(strtolower($extension), $static_extensions)) {
+    $file_path = __DIR__ . $path;
+    
+    // Debug informace pro favicon
+    if ($path === '/zvirata-bile.png') {
+        error_log("Favicon request: $path -> $file_path (exists: " . (file_exists($file_path) ? 'yes' : 'no') . ")");
+    }
+    
+    if (file_exists($file_path)) {
+        $content_types = [
+            'png' => 'image/png',
+            'jpg' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'svg' => 'image/svg+xml',
+            'ico' => 'image/x-icon',
+            'css' => 'text/css',
+            'js' => 'application/javascript',
+            'woff' => 'font/woff',
+            'woff2' => 'font/woff2',
+            'ttf' => 'font/ttf',
+            'eot' => 'application/vnd.ms-fontobject'
+        ];
+        
+        $content_type = $content_types[strtolower($extension)] ?? 'application/octet-stream';
+        header("Content-Type: $content_type");
+        header("Cache-Control: public, max-age=31536000");
+        header("Expires: Thu, 31 Dec 2025 23:59:59 GMT");
+        
+        // Debug informace pro favicon
+        if ($path === '/zvirata-bile.png') {
+            error_log("Serving favicon: $file_path (size: " . filesize($file_path) . " bytes)");
+        }
+        
+        readfile($file_path);
+        exit;
+    } else {
+        // Debug informace pro favicon
+        if ($path === '/zvirata-bile.png') {
+            error_log("Favicon not found: $file_path");
+        }
+    }
+}
+
 // Pokud je prázdná cesta, přesměrovat na index.html
 if (empty($path) || $path === '/') {
     $path = '/index.html';
