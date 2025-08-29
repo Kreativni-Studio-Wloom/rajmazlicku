@@ -62,7 +62,7 @@
 
         .nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             padding: 1rem 0;
         }
@@ -72,38 +72,7 @@
             transition: var(--transition);
         }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-color);
-        }
 
         .header.scrolled {
             background: rgba(255, 255, 255, 0.95);
@@ -221,9 +190,7 @@
                 font-size: 2.5rem;
             }
             
-            .nav-links {
-                display: none;
-            }
+            
             
             .content-title {
                 font-size: 2rem;
@@ -239,15 +206,7 @@
                 <a href="/">
                     <img src="photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
                 </a>
-                <ul class="nav-links">
-                    <li><a href="/#branches">Pobočky</a></li>
-                    <li><a href="/#akvatera">Trhy</a></li>
-                    <li><a href="/#smecka">Smečka</a></li>
-                    <li><a href="/#gallery">Fotogalerie</a></li>
-                    <li><a href="/#aktuality">Aktuality</a></li>
-                    <li><a href="/#faq">FAQ</a></li>
-                    <li><a href="/#contact">Kontakt</a></li>
-                </ul>
+
             </nav>
         </div>
     </header>

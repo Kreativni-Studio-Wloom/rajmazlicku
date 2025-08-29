@@ -62,7 +62,7 @@
 
         .nav {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             padding: 1rem 0;
         }
@@ -72,34 +72,7 @@
             transition: var(--transition);
         }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
 
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 500;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
 
         /* Hero Section */
         .hero {
@@ -366,15 +339,7 @@
                 <a href="/">
                     <img src="photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
                 </a>
-                <ul class="nav-links">
-                    <li><a href="index.html#branches">Pobočky</a></li>
-                    <li><a href="index.html#akvatera">Trhy</a></li>
-                    <li><a href="index.html#smecka">Smečka</a></li>
-                    <li><a href="index.html#gallery">Fotogalerie</a></li>
-                    <li><a href="index.html#aktuality">Aktuality</a></li>
-                    <li><a href="index.html#faq">FAQ</a></li>
-                    <li><a href="index.html#contact">Kontakt</a></li>
-                </ul>
+
             </nav>
         </div>
     </header>

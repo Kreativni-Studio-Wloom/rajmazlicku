@@ -62,6 +62,12 @@
             height: 50px;
         }
 
+        .header-content a {
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
         .logout-btn {
             background: var(--accent-color);
             color: var(--white);
@@ -75,6 +81,148 @@
 
         .logout-btn:hover {
             background: #e55a2b;
+        }
+
+        /* Mobilní navbar */
+        .mobile-nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .mobile-nav-toggle .hamburger {
+            width: 24px;
+            height: 2px;
+            background: var(--primary-color);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .mobile-nav-toggle .hamburger::before,
+        .mobile-nav-toggle .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .mobile-nav-toggle .hamburger::before {
+            top: -8px;
+        }
+
+        .mobile-nav-toggle .hamburger::after {
+            bottom: -8px;
+        }
+
+        .mobile-nav-toggle.active .hamburger {
+            background: transparent;
+        }
+
+        .mobile-nav-toggle.active .hamburger::before {
+            top: 0;
+            transform: rotate(45deg);
+        }
+
+        .mobile-nav-toggle.active .hamburger::after {
+            bottom: 0;
+            transform: rotate(-45deg);
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: var(--shadow-hover);
+            z-index: 1000;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .mobile-nav-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+
+
+        .mobile-nav-menu {
+            list-style: none;
+        }
+
+        .mobile-nav-item {
+            margin-bottom: 1rem;
+        }
+
+        .mobile-nav-link {
+            display: block;
+            padding: 1rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .mobile-nav-link:hover {
+            background: var(--light-gray);
+            color: var(--primary-color);
+            transform: translateX(8px);
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .mobile-nav-toggle {
+                display: block;
+            }
+
+            .header-content {
+                padding: 0 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
         }
 
         .login-section {
@@ -375,6 +523,157 @@
             border-radius: var(--border-radius);
             margin-top: 1rem;
             display: none;
+            border: 2px solid var(--light-gray);
+        }
+
+        .image-preview.cropped {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(0, 167, 158, 0.3);
+        }
+
+        /* Image Editor Styles */
+        .image-editor-container {
+            margin-top: 1rem;
+            padding: 1rem;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            background: var(--white);
+        }
+
+        .image-editor-header {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .image-editor-header h4 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary-color);
+        }
+
+        .image-editor-header p {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .image-editor-header p:last-child {
+            margin-bottom: 0;
+            color: var(--primary-color);
+            font-size: 0.85rem;
+        }
+
+        .image-editor-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .image-editor {
+            position: relative;
+            display: inline-block;
+            border: 2px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .editable-image {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .crop-frame {
+            position: absolute;
+            border: 2px solid var(--primary-color);
+            background: rgba(0, 167, 158, 0.1);
+            cursor: move;
+            min-width: 100px;
+            min-height: 75px; /* 4:3 ratio */
+            box-sizing: border-box;
+        }
+
+        .crop-frame::after {
+            content: '4:3';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .crop-handle {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border: 2px solid var(--white);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .crop-handle-nw {
+            top: -6px;
+            left: -6px;
+            cursor: nw-resize;
+        }
+
+        .crop-handle-ne {
+            top: -6px;
+            right: -6px;
+            cursor: ne-resize;
+        }
+
+        .crop-handle-sw {
+            bottom: -6px;
+            left: -6px;
+            cursor: sw-resize;
+        }
+
+        .crop-handle-se {
+            bottom: -6px;
+            right: -6px;
+            cursor: se-resize;
+        }
+
+        .image-editor-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .control-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--light-gray);
+            background: var(--white);
+            color: var(--text-dark);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .control-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .control-btn.primary {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .control-btn.primary:hover {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
         }
 
         .save-btn {
@@ -439,11 +738,38 @@
     <header class="header">
         <div class="container">
             <div class="header-content">
-                <img src="photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
+                <a href="index.html">
+                    <img src="photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
+                </a>
+                <button class="mobile-nav-toggle" id="mobileNavToggle">
+                    <div class="hamburger"></div>
+                </button>
                 <button class="logout-btn" id="logoutBtn" style="display: none;">Odhlásit se</button>
             </div>
         </div>
     </header>
+
+    <!-- Mobilní navbar -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+    <nav class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-header">
+            <h3 class="mobile-nav-title">Menu</h3>
+        </div>
+        <ul class="mobile-nav-menu">
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link" onclick="scrollToSection('dashboard')">Dashboard</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link" onclick="scrollToSection('posts')">Články</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link" onclick="scrollToSection('add')">Přidat článek</a>
+            </li>
+            <li class="mobile-nav-item">
+                <a href="#" class="mobile-nav-link" onclick="logout()">Odhlásit se</a>
+            </li>
+        </ul>
+    </nav>
 
     <!-- Login Section -->
     <div class="container">
@@ -507,6 +833,33 @@
                 <div class="form-group">
                     <label for="postImage">Obrázek:</label>
                     <input type="file" id="postImage" name="image" accept="image/*" required>
+                    
+                    <!-- Image Editor Container -->
+                    <div id="imageEditorContainer" class="image-editor-container" style="display: none;">
+                        <div class="image-editor-header">
+                            <h4>Úprava obrázku</h4>
+                            <p>Přesuňte a upravte velikost rámečku pro nastavení viditelné části obrázku</p>
+                            <p><strong>Poměr stran: 4:3 (800×600px) - ideální pro blog post</strong></p>
+                        </div>
+                        
+                        <div class="image-editor-wrapper">
+                            <div id="imageEditor" class="image-editor">
+                                <img id="editableImage" class="editable-image" alt="Upravovaný obrázek">
+                                <div id="cropFrame" class="crop-frame">
+                                    <div class="crop-handle crop-handle-nw"></div>
+                                    <div class="crop-handle crop-handle-ne"></div>
+                                    <div class="crop-handle crop-handle-sw"></div>
+                                    <div class="crop-handle crop-handle-se"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="image-editor-controls">
+                            <button type="button" id="resetCrop" class="control-btn">Resetovat</button>
+                            <button type="button" id="applyCrop" class="control-btn primary">Použít úpravy</button>
+                        </div>
+                    </div>
+                    
                     <img id="imagePreview" class="image-preview" alt="Náhled obrázku">
                 </div>
                 
@@ -625,6 +978,44 @@
             }
         }
 
+        // Formátování data
+        function formatDate(timestamp) {
+            if (!timestamp) {
+                return 'Datum není k dispozici';
+            }
+            
+            try {
+                // Pokud je timestamp Firestore Timestamp
+                if (timestamp.toDate) {
+                    return timestamp.toDate().toLocaleDateString('cs-CZ');
+                }
+                
+                // Pokud je timestamp číslo (Unix timestamp)
+                if (typeof timestamp === 'number') {
+                    return new Date(timestamp).toLocaleDateString('cs-CZ');
+                }
+                
+                // Pokud je timestamp string
+                if (typeof timestamp === 'string') {
+                    const date = new Date(timestamp);
+                    if (isNaN(date.getTime())) {
+                        return 'Neplatné datum';
+                    }
+                    return date.toLocaleDateString('cs-CZ');
+                }
+                
+                // Pokud je timestamp Date objekt
+                if (timestamp instanceof Date) {
+                    return timestamp.toLocaleDateString('cs-CZ');
+                }
+                
+                return 'Neplatné datum';
+            } catch (error) {
+                console.error('Chyba při formátování data:', error);
+                return 'Chyba data';
+            }
+        }
+
         // Zobrazení článku
         function displayPost(post) {
             const postCard = document.createElement('div');
@@ -635,7 +1026,7 @@
                     <h3 class="post-title">${post.title}</h3>
                     <div class="post-meta">
                         <span class="post-category">${post.category}</span>
-                        <span>${new Date(post.timestamp).toLocaleDateString('cs-CZ')}</span>
+                        <span>${formatDate(post.timestamp)}</span>
                     </div>
                     <div class="post-tags">
                         ${post.tags ? post.tags.map(tag => `<span class="post-tag">${tag.trim()}</span>`).join('') : ''}
@@ -658,13 +1049,29 @@
             editingPostId = null;
             modalTitle.textContent = 'Přidat nový článek';
             postForm.reset();
-            document.getElementById('imagePreview').style.display = 'none';
+            const imagePreview = document.getElementById('imagePreview');
+            imagePreview.style.display = 'none';
+            imagePreview.classList.remove('cropped');
+            document.getElementById('imageEditorContainer').style.display = 'none';
+            
+            // Reset cropped image data
+            window.croppedImageBlob = null;
+            window.croppedImageUrl = null;
+            
             postModal.style.display = 'block';
         });
 
         // Zavření modalu
         closeModal.addEventListener('click', () => {
             postModal.style.display = 'none';
+            
+            // Reset cropped image data
+            window.croppedImageBlob = null;
+            window.croppedImageUrl = null;
+            
+            // Reset image preview
+            const imagePreview = document.getElementById('imagePreview');
+            imagePreview.classList.remove('cropped');
         });
 
         // Kliknutí mimo modal
@@ -674,18 +1081,257 @@
             }
         });
 
-        // Náhled obrázku
-        document.getElementById('postImage').addEventListener('change', (e) => {
+        // Náhled obrázku a editor
+        document.getElementById('postImage').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (e) => {
+                reader.onload = function(e) {
                     const preview = document.getElementById('imagePreview');
+                    const editableImage = document.getElementById('editableImage');
+                    const imageEditorContainer = document.getElementById('imageEditorContainer');
+                    
                     preview.src = e.target.result;
                     preview.style.display = 'block';
+                    
+                    // Setup image editor
+                    editableImage.src = e.target.result;
+                    imageEditorContainer.style.display = 'block';
+                    
+                    // Initialize crop frame
+                    initializeCropFrame();
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        // Image editor functionality
+        let isDragging = false;
+        let isResizing = false;
+        let currentHandle = null;
+        let startX, startY, startLeft, startTop, startWidth, startHeight;
+
+        function initializeCropFrame() {
+            const cropFrame = document.getElementById('cropFrame');
+            const imageEditor = document.getElementById('imageEditor');
+            const editableImage = document.getElementById('editableImage');
+            
+            // Wait for image to load
+            editableImage.onload = function() {
+                const imgRect = editableImage.getBoundingClientRect();
+                
+                // Blog post aspect ratio: 4:3 (800x600)
+                const aspectRatio = 4/3;
+                
+                // Set initial crop frame size (centered, 70% of image width)
+                const frameWidth = imgRect.width * 0.7;
+                const frameHeight = frameWidth / aspectRatio;
+                
+                // Ensure frame fits within image bounds
+                const finalWidth = Math.min(frameWidth, imgRect.width);
+                const finalHeight = finalWidth / aspectRatio;
+                
+                // Center the frame
+                const frameLeft = (imgRect.width - finalWidth) / 2;
+                const frameTop = (imgRect.height - finalHeight) / 2;
+                
+                cropFrame.style.width = finalWidth + 'px';
+                cropFrame.style.height = finalHeight + 'px';
+                cropFrame.style.left = frameLeft + 'px';
+                cropFrame.style.top = frameTop + 'px';
+            };
+        }
+
+        // Mouse events for dragging
+        document.getElementById('cropFrame').addEventListener('mousedown', function(e) {
+            if (e.target === this) {
+                isDragging = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                startLeft = parseInt(this.style.left) || 0;
+                startTop = parseInt(this.style.top) || 0;
+                e.preventDefault();
+            }
+        });
+
+        // Mouse events for resizing
+        document.querySelectorAll('.crop-handle').forEach(handle => {
+            handle.addEventListener('mousedown', function(e) {
+                isResizing = true;
+                currentHandle = this;
+                startX = e.clientX;
+                startY = e.clientY;
+                startLeft = parseInt(cropFrame.style.left) || 0;
+                startTop = parseInt(cropFrame.style.top) || 0;
+                startWidth = parseInt(cropFrame.style.width) || 100;
+                startHeight = parseInt(cropFrame.style.height) || 100;
+                e.preventDefault();
+            });
+        });
+
+        // Global mouse move and up events
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                const newLeft = startLeft + deltaX;
+                const newTop = startTop + deltaY;
+                
+                // Constrain to image bounds
+                const imageEditor = document.getElementById('imageEditor');
+                const cropFrame = document.getElementById('cropFrame');
+                const maxLeft = imageEditor.offsetWidth - cropFrame.offsetWidth;
+                const maxTop = imageEditor.offsetHeight - cropFrame.offsetHeight;
+                
+                cropFrame.style.left = Math.max(0, Math.min(newLeft, maxLeft)) + 'px';
+                cropFrame.style.top = Math.max(0, Math.min(newTop, maxTop)) + 'px';
+            }
+            
+            if (isResizing) {
+                const deltaX = e.clientX - startX;
+                const deltaY = e.clientY - startY;
+                
+                // Blog post aspect ratio: 4:3
+                const aspectRatio = 4/3;
+                
+                let newWidth, newHeight, newLeft, newTop;
+                
+                // Handle different resize directions while maintaining aspect ratio
+                if (currentHandle.classList.contains('crop-handle-se')) {
+                    // Southeast handle - expand from top-left
+                    newWidth = startWidth + deltaX;
+                    newHeight = newWidth / aspectRatio;
+                    newLeft = startLeft;
+                    newTop = startTop;
+                } else if (currentHandle.classList.contains('crop-handle-sw')) {
+                    // Southwest handle - expand from top-right
+                    newWidth = startWidth - deltaX;
+                    newHeight = newWidth / aspectRatio;
+                    newLeft = startLeft + deltaX;
+                    newTop = startTop;
+                } else if (currentHandle.classList.contains('crop-handle-ne')) {
+                    // Northeast handle - expand from bottom-left
+                    newWidth = startWidth + deltaX;
+                    newHeight = newWidth / aspectRatio;
+                    newLeft = startLeft;
+                    newTop = startTop;
+                } else if (currentHandle.classList.contains('crop-handle-nw')) {
+                    // Northwest handle - expand from bottom-right
+                    newWidth = startWidth - deltaX;
+                    newHeight = newWidth / aspectRatio;
+                    newLeft = startLeft + deltaX;
+                    newTop = startTop;
+                }
+                
+                // Constrain minimum size
+                newWidth = Math.max(100, newWidth);
+                newHeight = newWidth / aspectRatio;
+                
+                // Constrain to image bounds
+                const imageEditor = document.getElementById('imageEditor');
+                const maxWidth = imageEditor.offsetWidth - newLeft;
+                const maxHeight = imageEditor.offsetHeight - newTop;
+                
+                // Ensure both width and height fit within bounds
+                const maxWidthByHeight = (maxHeight * aspectRatio);
+                const maxHeightByWidth = maxWidth / aspectRatio;
+                
+                if (newWidth > maxWidth || newHeight > maxHeight) {
+                    if (maxWidth < maxWidthByHeight) {
+                        newWidth = maxWidth;
+                        newHeight = newWidth / aspectRatio;
+                    } else {
+                        newHeight = maxHeight;
+                        newWidth = newHeight * aspectRatio;
+                    }
+                }
+                
+                // Apply new dimensions
+                cropFrame.style.width = newWidth + 'px';
+                cropFrame.style.height = newHeight + 'px';
+                cropFrame.style.left = newLeft + 'px';
+                cropFrame.style.top = newTop + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+            isResizing = false;
+            currentHandle = null;
+        });
+
+        // Reset crop frame
+        document.getElementById('resetCrop').addEventListener('click', function() {
+            initializeCropFrame();
+        });
+
+        // Apply crop
+        document.getElementById('applyCrop').addEventListener('click', function() {
+            const cropFrame = document.getElementById('cropFrame');
+            const editableImage = document.getElementById('editableImage');
+            const imageEditor = document.getElementById('imageEditor');
+            
+            // Create canvas for cropping
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Calculate crop dimensions
+            const frameRect = cropFrame.getBoundingClientRect();
+            const editorRect = imageEditor.getBoundingClientRect();
+            const imgRect = editableImage.getBoundingClientRect();
+            
+            // Calculate relative positions
+            const cropX = (frameRect.left - editorRect.left) / imgRect.width;
+            const cropY = (frameRect.top - editorRect.top) / imgRect.height;
+            const cropWidth = frameRect.width / imgRect.width;
+            const cropHeight = frameRect.height / imgRect.height;
+            
+            // Set canvas size to maintain aspect ratio
+            const targetWidth = 800; // Standard blog image width
+            const targetHeight = 600; // Standard blog image height (4:3 ratio)
+            
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
+            
+            // Draw cropped image
+            ctx.drawImage(
+                editableImage,
+                cropX * editableImage.naturalWidth,
+                cropY * editableImage.naturalHeight,
+                cropWidth * editableImage.naturalWidth,
+                cropHeight * editableImage.naturalHeight,
+                0, 0, targetWidth, targetHeight
+            );
+            
+            // Convert to blob and update file input
+            canvas.toBlob(function(blob) {
+                // Create new file from blob
+                const croppedFile = new File([blob], 'cropped-image.jpg', { type: 'image/jpeg' });
+                
+                // Create new FileList-like object
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(croppedFile);
+                
+                // Update file input
+                document.getElementById('postImage').files = dataTransfer.files;
+                
+                // Update preview with cropped image
+                const preview = document.getElementById('imagePreview');
+                preview.src = URL.createObjectURL(blob);
+                preview.style.display = 'block';
+                preview.classList.add('cropped');
+                
+                // Store cropped image data for form submission
+                window.croppedImageBlob = blob;
+                window.croppedImageUrl = URL.createObjectURL(blob);
+                
+                // Hide editor
+                document.getElementById('imageEditorContainer').style.display = 'none';
+                
+                // Show success message
+                alert('Obrázek byl úspěšně upraven!');
+            }, 'image/jpeg', 0.9);
         });
 
         // Uložení článku
@@ -698,7 +1344,12 @@
                 saveBtn.disabled = true;
 
                 const formData = new FormData(postForm);
-                const imageFile = formData.get('image');
+                let imageFile = formData.get('image');
+                
+                // Use cropped image if available
+                if (window.croppedImageBlob) {
+                    imageFile = new File([window.croppedImageBlob], 'cropped-image.jpg', { type: 'image/jpeg' });
+                }
                 
                 // Upload obrázku do Firebase Storage
                 const imageRef = storage.ref(`blog-images/${Date.now()}_${imageFile.name}`);
@@ -717,7 +1368,11 @@
                 };
 
                 if (editingPostId) {
-                    // Úprava existujícího článku
+                    // Úprava existujícího článku - zachováme původní timestamp
+                    const existingPost = await db.collection('posts').doc(editingPostId).get();
+                    if (existingPost.exists && existingPost.data().timestamp) {
+                        postData.timestamp = existingPost.data().timestamp;
+                    }
                     await db.collection('posts').doc(editingPostId).update(postData);
                 } else {
                     // Přidání nového článku
@@ -730,6 +1385,10 @@
                 postModal.style.display = 'none';
                 loadPosts();
                 postForm.reset();
+                
+                // Reset cropped image data
+                window.croppedImageBlob = null;
+                window.croppedImageUrl = null;
             } catch (error) {
                 console.error('Chyba při ukládání:', error);
                 alert('Chyba při ukládání článku: ' + error.message);
@@ -762,6 +1421,13 @@
                 const preview = document.getElementById('imagePreview');
                 preview.src = post.imageUrl;
                 preview.style.display = 'block';
+                
+                // Hide image editor for existing posts
+                document.getElementById('imageEditorContainer').style.display = 'none';
+                
+                // Reset cropped image data for editing
+                window.croppedImageBlob = null;
+                window.croppedImageUrl = null;
                 
                 postModal.style.display = 'block';
             } catch (error) {
@@ -814,6 +1480,63 @@
                 console.error('Chyba při změně pořadí:', error);
             }
         }
+
+        // Mobilní navbar ovládání
+        const mobileNavToggle = document.getElementById('mobileNavToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+
+        // Otevření/zavření mobilního navbaru
+        mobileNavToggle.addEventListener('click', () => {
+            if (mobileNav.classList.contains('active')) {
+                // Zavření menu
+                closeMobileNav();
+            } else {
+                // Otevření menu
+                mobileNav.classList.add('active');
+                mobileNavOverlay.classList.add('active');
+                mobileNavToggle.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        });
+
+        // Zavření mobilního navbaru
+        function closeMobileNav() {
+            mobileNav.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            mobileNavToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileNavOverlay.addEventListener('click', closeMobileNav);
+
+        // Scroll na sekci
+        function scrollToSection(section) {
+            closeMobileNav();
+            
+            switch(section) {
+                case 'dashboard':
+                    document.querySelector('.dashboard-header').scrollIntoView({ behavior: 'smooth' });
+                    break;
+                case 'posts':
+                    document.getElementById('postsGrid').scrollIntoView({ behavior: 'smooth' });
+                    break;
+                case 'add':
+                    document.getElementById('addPostBtn').click();
+                    break;
+            }
+        }
+
+        // Zavření navbaru při kliknutí na odkaz
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                if (link.getAttribute('onclick') && link.getAttribute('onclick').includes('logout')) {
+                    return; // Necháme logout funkci
+                }
+                e.preventDefault();
+                closeMobileNav();
+            });
+        });
     </script>
 </body>
 </html>
