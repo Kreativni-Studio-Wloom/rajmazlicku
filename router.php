@@ -230,6 +230,16 @@ function generatePostPage($post_id) {
 
         .logo {
             height: 50px;
+            transition: var(--transition);
+        }
+
+        .logo-link {
+            text-decoration: none;
+            display: block;
+        }
+
+        .logo-link:hover .logo {
+            transform: scale(1.05);
         }
 
         .back-btn {
@@ -432,7 +442,9 @@ function generatePostPage($post_id) {
     <div class="header">
         <div class="container">
             <div class="header-content">
-                <img src="/photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
+                <a href="/" class="logo-link">
+                    <img src="/photo/rm-logo.png" alt="Ráj mazlíčků" class="logo">
+                </a>
                 <a href="/aktuality" class="back-btn">← Zpět na aktuality</a>
             </div>
         </div>
